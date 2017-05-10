@@ -1,5 +1,5 @@
 
-# Sticky Sidebar
+# Sticky Sidebar (Under Development)
 
 jQuery plugin for making smart and high performance sticky sidebars.
 
