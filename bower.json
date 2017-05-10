@@ -1,0 +1,22 @@
+{
+  "name": "sticky-sidebar",
+  "description": "A jQuery plugin for making smart and high performance.",
+  "version": "1.0.0",
+  "authors": [
+    "Ahmed Bouhuolia <a.bouhuolia@gmail.com>"
+  ],
+  "license": "MIT",
+  "main": "./sticky-sidebar.js",
+  "keywords": [
+    "sticky", "sidebar"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+    "jquery": ">=1.7.0",
+    "raf.js": ">=0.04"
+  }
+}
