@@ -1,5 +1,5 @@
-
-# Sticky Sidebar
+# Sticky Sidebar (Under Development)
+==============
 
 jQuery plugin for making smart and high performance sticky sidebars.
 
@@ -95,3 +95,4 @@ Sticky Sidebar is released under the MIT license. Have at it.
 -------
 
 Made by Ahmed Bouhuolia
+=======
