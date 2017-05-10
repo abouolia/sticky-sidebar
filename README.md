@@ -35,7 +35,7 @@ npm install sticky-sidebar
 
 Your website's html structure has to be similer to this in order to work:
 
-````
+````html
 <div id="main-content" class="main">
     <div id="sidebar" class="sidebar">
         <div class="sidebar__inner">
@@ -52,7 +52,7 @@ Note that inner sidebar wrapper ``.sidebar__innner`` is optional but highly reco
 
 For the above example, you can use the following JavaScript:
 
-````
+````html
 <script type="text/javascript" src="./js/jquery.js"></script>
 <script type="text/javascript" src="./js/sticky-sidebar.js"></script>
 
@@ -73,7 +73,7 @@ To easily configure sticky sidebar to any element on the document using attribut
 
 Either by configure container of sticky element by adding ``data-sticky-sidebar-container`` attribute to container of sticky element. Below code will give you 
 
-````
+````html
 <div id="container" data-sticky-sidebar-container>
     <div id="#sidebar" data-sticky-sidebar data-top-spacing="50">
     	<!-- Content Goes Here -->
