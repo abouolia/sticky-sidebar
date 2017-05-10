@@ -3,11 +3,11 @@
 
 jQuery plugin for making smart and high performance sticky sidebars.
 
-[Basic Example](http://abouolia.github.com/sticky-sidebar/emamples/basic.html)
+[Basic Example](https://abouolia.github.io/sticky-sidebar/examples/basic.html)
 
-[Scrollable Sticky Element](http://abouolia.github.com/sticky-sidebar/examples/scrollable-element.html)
+[Scrollable Sticky Element](https://abouolia.github.io/sticky-sidebar/examples/scrollable-element.html)
 
-[Multiply Sticky Elements](http://abouolia.github.com/sticky-sidebar/examples/multiply-elements.html)
+[Multiply Sticky Elements](https://abouolia.github.io/sticky-sidebar/examples/multiply-elements.html)
 
 See for complete documents and examples [abouolia.github.com/sticky-sidebar](http://abouolia.github.com/sticky-sidebar)
 
