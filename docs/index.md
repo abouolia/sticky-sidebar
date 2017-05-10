@@ -4,7 +4,7 @@ layout: default
 
 [Sticky Sidebar](http://github.com/abouolia/sticky-sidebar) is jQuery plugin for making intelligent and high performance sticky sidebar, works with sidebar if it's bigger or smaller than viewport, has resize sensor to re-calculate its dimensions automatically when size of sidebar or its container is changed, supports multiply sidebars in once and compatible with Firefox, Chrome, Safari, and IE9+. Source can be found on [Github](http://github.com/abouolia/sticky-sidebar).
 
-<iframe src="https://ghbtns.com/github-btn.html?user=chibicode&amp;repo=solo&amp;type=watch&amp;count=true&amp;size=large"
+<iframe src="https://ghbtns.com/github-btn.html?user=abouolia&amp;repo=sticky-sidebar&amp;type=watch&amp;count=true&amp;size=large"
   allowtransparency="true" frameborder="0" scrolling="0" width="170" height="30"></iframe><br/>
 
 ## Example 
