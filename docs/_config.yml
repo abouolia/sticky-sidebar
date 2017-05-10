@@ -1,0 +1,10 @@
+# Site settings
+title: jQuery Sticky Sidebar
+tag_text: Sticky Sidebar
+description: 
+
+# Build settings
+markdown: kramdown
+exclude: ["README.md"]
+sass:
+  style: compressed
