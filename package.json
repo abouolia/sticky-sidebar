@@ -1,6 +1,6 @@
 {
   "name": "sticky-sidebar",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "devDependencies": {
     "grunt": "~0.4.5",
     "grunt-contrib-concat": "^1.0.1",

@@ -1,5 +1,5 @@
 {
-  "name": "sticky-sidebar",
+  "name": "Sticky Sidebar",
   "description": "A jQuery plugin for making smart and high performance.",
   "version": "1.0.0",
   "authors": [
@@ -8,15 +8,18 @@
   "license": "MIT",
   "main": "./sticky-sidebar.js",
   "keywords": [
-    "sticky", "sidebar"
+    "sticky",
+    "sidebar"
   ],
   "ignore": [
-    "**/.*",
     "node_modules",
-    "bower_components"
+    "bower_components",
+    "docs/_site",
+    "docs/.sass-cache"
   ],
   "dependencies": {
-    "jquery": ">=1.7.0",
-    "raf.js": ">=0.04"
-  }
+    "raf.js": "^0.0.4",
+    "jquery": "^3.2.1"
+  },
+  "homepage": "https://github.com/abouolia/sticky-sidebar"
 }
