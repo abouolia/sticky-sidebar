@@ -169,7 +169,7 @@ Either by configure container of sticky element by adding ``data-sticky-sidebar-
 
 ## Configure Your CSS
 
-Next you are going to need some CSS just to improve performance and prevent repainting on scrolling. Sticky sidebar plugin doesn't add below style as inline style so you need to add it manually in main stylesheet.
+Next you are going to need some CSS just to improve performance and prevent repainting on scrolling. Sticky sidebar plugin doesn't add below style as inline style so you need to add it manually in your stylesheet.
 
 {% highlight css %}
 .sidebar{
@@ -277,7 +277,7 @@ Sticky sidebar jQuery plugin has various of events are trigger when changing aff
 
 `affixed.static.sticky` — The event fires immdiately after the element has been returned to its position.
 
-`recalcDimenstions.sticky` — Trigger this event will cause force to re-calculate all cached dimentions of sticky sidebar plugin.
+`update.sticky` — Trigger this event will cause force to re-calculate all cached dimentions of sticky sidebar plugin.
 
 For example if you want to detect when element sticks top and bottom we might do:
 
@@ -291,7 +291,7 @@ $('.sidebar').on('affix-bottom.sticky', function(event){
 });
 
 // Force to re-calculate all cached dimentions.
-$('.sidebar').trigger('recalcDimenstions.sticky');
+$('.sidebar').trigger('update.sticky');
 
 {% endhighlight javascript %}
 
@@ -299,10 +299,10 @@ $('.sidebar').trigger('recalcDimenstions.sticky');
 
 ## Methods
 
-``recalcDimensions`` - Force re-calculate all cached dimensions of sidebar, container and viewport. The same function of trigger event `recalcDimensions.sticky` read about events above.
+``updateSticky`` - Force re-calculate all cached dimensions of sidebar, container and viewport and update position of sidebar according to the new dimenstions. The same function of trigger event `update.sticky` read about events above.
 
 {% highlight javascript %}
-$('.sidebar').stickySidebar('recalcDimensions');
+$('.sidebar').stickySidebar('updateSticky');
 {% endhighlight javascript %}
 
 ``destroy`` - remove all inline style, helper classes and event listeners.

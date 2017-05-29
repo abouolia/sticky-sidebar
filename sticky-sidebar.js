@@ -213,7 +213,7 @@
                 .on('scroll.'+ StickySidebar.EVENT_KEY, $.proxy(this._onScroll, this));
 
             this.$sidebar
-                .on('recalcDimenstions.' + StickySidebar.EVENT_KEY, $.proxy(this.updateSticky, this));
+                .on('update.' + StickySidebar.EVENT_KEY, $.proxy(this.updateSticky, this));
 
             if( this.options.resizeSensor ){
                 this.addResizerListener(this.$sidebarInner, $.proxy(this.updateSticky, this));
@@ -441,7 +441,6 @@
 
             if( this.affixedType != affixType && affixType ){
                 var affixEvent = $.Event('affix.' + affixType.replace('viewport-', '') + StickySidebar.EVENT_KEY);
-                
                 this.$sidebar.trigger(affixEvent);
 
                 if( 'static' === affixType )
@@ -628,7 +627,7 @@
             }
 
             if( 'string' === typeof config){
-                if (data[config] === undefined && ['destory', 'updateSticky'].indexOf(config) != -1) {
+                if (data[config] === undefined && ['destory', 'updateSticky'].indexOf(config) === -1) {
                     throw new Error('No method named "'+ config +'"');
                 }
                 data[config]();
