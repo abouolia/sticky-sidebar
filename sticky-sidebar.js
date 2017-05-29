@@ -627,7 +627,7 @@
             }
 
             if( 'string' === typeof config){
-                if (data[config] === undefined && ['destory', 'updateSticky'].indexOf(config) === -1) {
+                if (data[config] === undefined && ['destroy', 'updateSticky'].indexOf(config) === -1) {
                     throw new Error('No method named "'+ config +'"');
                 }
                 data[config]();
