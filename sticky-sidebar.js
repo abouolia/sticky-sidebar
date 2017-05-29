@@ -209,11 +209,11 @@
             var options = this.options;
 
             _window
-                .on('resize.'+ StickySidebar.EVENT_KEY, $.proxy(this._onResize, this))
-                .on('scroll.'+ StickySidebar.EVENT_KEY, $.proxy(this._onScroll, this));
+                .on('resize'+ StickySidebar.EVENT_KEY, $.proxy(this._onResize, this))
+                .on('scroll'+ StickySidebar.EVENT_KEY, $.proxy(this._onScroll, this));
 
             this.$sidebar
-                .on('update.' + StickySidebar.EVENT_KEY, $.proxy(this.updateSticky, this));
+                .on('update' + StickySidebar.EVENT_KEY, $.proxy(this.updateSticky, this));
 
             if( this.options.resizeSensor ){
                 this.addResizerListener(this.$sidebarInner, $.proxy(this.updateSticky, this));
@@ -599,7 +599,7 @@
             this.$sidebar
                 .removeClass(this.options.stickyClass)
                 .css({minHeight: ''})
-                .off('recalcDimenstions' + StickySidebar.EVENT_KEY)
+                .off('update' + StickySidebar.EVENT_KEY)
                 .removeData('stickySidebar');
 
             this.$sidebarInner
