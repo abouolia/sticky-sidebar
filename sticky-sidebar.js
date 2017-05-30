@@ -21,7 +21,7 @@
 
         // Sidebar wrapper and inner wrapper element.
         this.$sidebar = $(sidebar);
-        this.$sidebarInner = false;
+        this.$sidebarInner = $(this.options.innerWrapperSelector, this.$sidebar);
        
         // Sidebar container element.
         this.$container = this.$sidebar.closest(this.options.containerSelector);
@@ -88,10 +88,10 @@
         containerSelector: false,
 
         /**
-         * Wrapper class of sticky sidebar.
-         * @type {String}
+         * Sticky sidebar wrapper selector.
+         * @type {String|False}
          */
-        innerWrapperClass: 'inner-wrapper-sticky',
+        innerWrapperSelector: false,
         
         /**
          * The name of CSS class to apply to elements when they have become stuck.
@@ -153,24 +153,9 @@
         initialize: function(){
             this.$sidebar.trigger('initialize' + StickySidebar.EVENT_KEY);
 
-            // Get sticky sidebar inner wrapper, if not found, will create one.
-            if( this.options.innerWrapperClass ){
-                this.$sidebarInner = this.$sidebar.find('.' + this.options.innerWrapperClass);
-
-                if( 0 === this.$sidebarInner.length )
-                    this.$sidebarInner = false;
-            }
-
-            if( ! this.$sidebarInner ){
-                var wrapper = $('<div class="'+ this.options.innerWrapperClass +'" />');
-                var innerWrapSelector = '> div';
-
-                if( this.options.innerWrapSelector )
-                    innerWrapSelector = '.' + this.options.innerWrapSelector;
-
-                this.$sidebar.wrapInner(wrapper);
-                this.$sidebarInner = this.$sidebar.find(innerWrapSelector);
-            }
+            // If sticky sidebar inner wrapper not found, create one.
+            if (!this.$sidebarInner.length)
+                this.$sidebarInner = this.$sidebar.wrapInner('<div />').find('> div');
 
             // If there's no specific container, user parent of sidebar as container.
             if( ! this.$container.length )
@@ -609,6 +594,9 @@
                 this.removeResizeListener(this.$sidebarInner, $.proxy(this.updateSticky, this));
                 this.removeResizeListener(this.$container, $.proxy(this.updateSticky, this));
             }
+
+            if ( !$(this.options.innerWrapperSelector, this.$sidebar).length )
+                this.$sidebarInner.contents().unwrap();
         }
     };
 
