@@ -15,7 +15,8 @@ module.exports = function(grunt) {
 			options: {
 				globals: {
 					jQuery: true
-				}
+				},
+				reporterOutput: ""
 			}
 		},
 		uglify: {
@@ -26,15 +27,24 @@ module.exports = function(grunt) {
 				},
 			},
 		},
+		copy: {
+			main: {
+				expand: true,
+				cwd: 'dist/',
+				src: 'sticky-sidebar.pkgd.js',
+				dest: 'docs/js'
+			},
+		},
 		watch: {
 			files: ['<%= jshint.files %>'],
-			tasks: ['jshint', 'uglify']
+			tasks: ['concat', 'jshint', 'uglify', 'copy']
 		}
 	});
 
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
+	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 
 	grunt.registerTask('default', ['concat', 'jshint', 'uglify']);
