@@ -422,11 +422,10 @@
          * @return {Object}
          */
         _getStyle: function(affixType){
-           if( 'undefined' === typeof affixType ) return;
+            if( 'undefined' === typeof affixType ) return;
 
-           var style = {inner: {}, outer: {}};
-
-           var dimensions = this.dimensions;
+            var style = {inner: {}, outer: {}};
+            var dimensions = this.dimensions;
 
             switch( affixType ){
                 case 'VIEWPORT-TOP':
@@ -469,18 +468,20 @@
          * style, adding helper class and trigger events.
          * @function
          * @protected
-         * @param {string} affixType - Affix type of sticky sidebar.
+         * @param {string} force - Update sticky sidebar position by force.
          */
-       stickyPosition: function(){
+       stickyPosition: function(force){
             if( ! this.$sidebar.is(':visible') || this._breakpoint ) return;
+
+            force = force || false;
             
             var offsetTop = this.options.topSpacing;
             var offsetBottom = this.options.bottomSpacing;
 
             var affixType = this.getAffixType();
             var style = this._getStyle(affixType);
-
-            if( this.affixedType != affixType && affixType ){
+            
+            if( (this.affixedType != affixType || force) && affixType ){
                 var affixEvent = $.Event('affix.' + affixType.replace('viewport-', '') + StickySidebar.EVENT_KEY);
                 this.$sidebar.trigger(affixEvent);
 
@@ -498,7 +499,6 @@
             if( this._initialized ) this.$sidebarInner.css('left', style.inner.left);
 
             this.$sidebar.css(style.outer);
-            
             this.affixedType = affixType;
         },
 
@@ -524,7 +524,7 @@
          */
         updateSticky: function(){
             this.calcDimensions();
-            this.stickyPosition();
+            this.stickyPosition(true);
         },
 
         /**
