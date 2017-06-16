@@ -88,10 +88,10 @@
         containerSelector: false,
 
         /**
-         * Wrapper class of sticky sidebar.
+         * Inner wrapper selector.
          * @type {String}
          */
-        innerWrapperClass: 'inner-wrapper-sticky',
+        innerWrapSelector: '.inner-wrapper-sticky',
         
         /**
          * The name of CSS class to apply to elements when they have become stuck.
@@ -152,24 +152,20 @@
          */
         initialize: function(){
             this.$sidebar.trigger('initialize' + StickySidebar.EVENT_KEY);
-
+            
             // Get sticky sidebar inner wrapper, if not found, will create one.
-            if( this.options.innerWrapperClass ){
-                this.$sidebarInner = this.$sidebar.find('.' + this.options.innerWrapperClass);
+            if( this.options.innerWrapSelector ){
+                this.$sidebarInner = this.$sidebar.find(this.options.innerWrapSelector);
 
                 if( 0 === this.$sidebarInner.length )
                     this.$sidebarInner = false;
             }
 
             if( ! this.$sidebarInner ){
-                var wrapper = $('<div class="'+ this.options.innerWrapperClass +'" />');
-                var innerWrapSelector = '> div';
-
-                if( this.options.innerWrapSelector )
-                    innerWrapSelector = '.' + this.options.innerWrapSelector;
+                var wrapper = $('<div class="inner-wrapper-sticky" />');
 
                 this.$sidebar.wrapInner(wrapper);
-                this.$sidebarInner = this.$sidebar.find(innerWrapSelector);
+                this.$sidebarInner = this.$sidebar.find('.inner-wrapper-sticky');
             }
 
             // If there's no specific container, user parent of sidebar as container.
