@@ -408,11 +408,11 @@
                 case 'VIEWPORT-BOTTOM':
                 case 'VIEWPORT-UNBOTTOM':
                 case 'CONTAINER-BOTTOM':
-                    style.outer = {minHeight: dimensions.translateY + dimensions.sidebarHeight};
+                    style.outer = {height: dimensions.sidebarHeight, position: 'relative'};
                     break;
             }
 
-            style.outer = $.extend({}, {minHeight: ''}, style.outer);
+            style.outer = $.extend({}, {height: '', position: ''}, style.outer);
             style.inner = $.extend({}, {position: 'relative', top: '', left: '', bottom: '', width: '',  transform: ''}, style.inner);
 
             return style;
@@ -427,7 +427,7 @@
          */
        stickyPosition: function(force){
             if( ! this.$sidebar.is(':visible') || this._breakpoint ) return;
-
+            
             force = force || false;
             
             var offsetTop = this.options.topSpacing;
@@ -447,13 +447,14 @@
                 
                 var affixedEvent = $.Event('affixed.'+ affixType.replace('viewport', '') + StickySidebar.EVENT_KEY);
                 
+                this.$sidebar.css(style.outer);
                 this.$sidebarInner.css(style.inner);
+
                 this.$sidebar.trigger(affixedEvent);
+            } else {
+                if( this._initialized ) this.$sidebarInner.css('left', style.inner.left);
             }
 
-            if( this._initialized ) this.$sidebarInner.css('left', style.inner.left);
-
-            this.$sidebar.css(style.outer);
             this.affixedType = affixType;
         },
 
