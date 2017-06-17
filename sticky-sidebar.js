@@ -225,7 +225,7 @@
         _onScroll: function(event){
             if( ! this.$sidebar.is(':visible') ) return;
             
-            this.animateSticky();
+            this.stickyPosition();
         },
 
         /**
@@ -235,10 +235,8 @@
          * @param {Object} event - Event object passed from listener.
          */
         _onResize: function(event){
-            requestAnimationFrame($.proxy(function(){
-                this._widthBreakpoint();
-                this.updateSticky();
-            }, this) );
+            this._widthBreakpoint();
+            this.updateSticky();
         },
 
         /**
@@ -484,16 +482,6 @@
         },
 
         /**
-         * RequestAnimationFrame wrapper.
-         * @public
-         */
-        animateSticky: function(){
-            requestAnimationFrame( $.proxy(function(){
-                this.stickyPosition();
-            }, this) );
-        },
-        
-        /**
          * Add resize sensor listener to specifc element.
          * @public
          * @param {DOMElement|jQuery} element - 
@@ -573,15 +561,10 @@
          */
         _resizeListener: function(event){
             var _window = event.target || event.srcElement;
+            var trigger = _window.resizeTrigger;
             
-            cancelAnimationFrame(_window.resizeSensorRAF);
-
-            _window.resizeSensorRAF = requestAnimationFrame(function(){
-                var trigger = _window.resizeTrigger;
-
-                trigger.resizeListeners.forEach(function(callback){
-                    callback.call(trigger, event);
-                });
+            trigger.resizeListeners.forEach(function(callback){
+                callback.call(trigger, event);
             });
         },
 

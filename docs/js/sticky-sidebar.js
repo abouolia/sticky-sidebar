@@ -1,45 +1,4 @@
-/*
- * raf.js
- * https://github.com/ngryman/raf.js
- *
- * original requestAnimationFrame polyfill by Erik Möller
- * inspired from paul_irish gist and post
- *
- * Copyright (c) 2013 ngryman
- * Licensed under the MIT license.
- */
-
-(function(window) {
-	var lastTime = 0,
-		vendors = ['webkit', 'moz'],
-		requestAnimationFrame = window.requestAnimationFrame,
-		cancelAnimationFrame = window.cancelAnimationFrame,
-		i = vendors.length;
-
-	// try to un-prefix existing raf
-	while (--i >= 0 && !requestAnimationFrame) {
-		requestAnimationFrame = window[vendors[i] + 'RequestAnimationFrame'];
-		cancelAnimationFrame = window[vendors[i] + 'CancelAnimationFrame'];
-	}
-
-	// polyfill with setTimeout fallback
-	// heavily inspired from @darius gist mod: https://gist.github.com/paulirish/1579671#comment-837945
-	if (!requestAnimationFrame || !cancelAnimationFrame) {
-		requestAnimationFrame = function(callback) {
-			var now = +new Date(), nextTime = Math.max(lastTime + 16, now);
-			return setTimeout(function() {
-				callback(lastTime = nextTime);
-			}, nextTime - now);
-		};
-
-		cancelAnimationFrame = clearTimeout;
-	}
-
-	// export to window
-	window.requestAnimationFrame = requestAnimationFrame;
-	window.cancelAnimationFrame = cancelAnimationFrame;
-}(window));
-;/**
+/**
  * Sticky Sidebar for jQuery.
  * @version 1.0.0
  * @author Ahmed Bouhuolia <a.bouhuolia@gmail.com>
@@ -129,10 +88,10 @@
         containerSelector: false,
 
         /**
-         * Wrapper class of sticky sidebar.
+         * Inner wrapper selector.
          * @type {String}
          */
-        innerWrapperClass: 'inner-wrapper-sticky',
+        innerWrapSelector: '.inner-wrapper-sticky',
         
         /**
          * The name of CSS class to apply to elements when they have become stuck.
@@ -193,24 +152,20 @@
          */
         initialize: function(){
             this.$sidebar.trigger('initialize' + StickySidebar.EVENT_KEY);
-
+            
             // Get sticky sidebar inner wrapper, if not found, will create one.
-            if( this.options.innerWrapperClass ){
-                this.$sidebarInner = this.$sidebar.find('.' + this.options.innerWrapperClass);
+            if( this.options.innerWrapSelector ){
+                this.$sidebarInner = this.$sidebar.find(this.options.innerWrapSelector);
 
                 if( 0 === this.$sidebarInner.length )
                     this.$sidebarInner = false;
             }
 
             if( ! this.$sidebarInner ){
-                var wrapper = $('<div class="'+ this.options.innerWrapperClass +'" />');
-                var innerWrapSelector = '> div';
-
-                if( this.options.innerWrapSelector )
-                    innerWrapSelector = '.' + this.options.innerWrapSelector;
+                var wrapper = $('<div class="inner-wrapper-sticky" />');
 
                 this.$sidebar.wrapInner(wrapper);
-                this.$sidebarInner = this.$sidebar.find(innerWrapSelector);
+                this.$sidebarInner = this.$sidebar.find('.inner-wrapper-sticky');
             }
 
             // If there's no specific container, user parent of sidebar as container.
@@ -270,7 +225,7 @@
         _onScroll: function(event){
             if( ! this.$sidebar.is(':visible') ) return;
             
-            this.animateSticky();
+            this.stickyPosition();
         },
 
         /**
@@ -280,10 +235,8 @@
          * @param {Object} event - Event object passed from listener.
          */
         _onResize: function(event){
-            requestAnimationFrame($.proxy(function(){
-                this._widthBreakpoint();
-                this.updateSticky();
-            }, this) );
+            this._widthBreakpoint();
+            this.updateSticky();
         },
 
         /**
@@ -453,11 +406,11 @@
                 case 'VIEWPORT-BOTTOM':
                 case 'VIEWPORT-UNBOTTOM':
                 case 'CONTAINER-BOTTOM':
-                    style.outer = {minHeight: dimensions.translateY + dimensions.sidebarHeight};
+                    style.outer = {height: dimensions.sidebarHeight, position: 'relative'};
                     break;
             }
 
-            style.outer = $.extend({}, {minHeight: ''}, style.outer);
+            style.outer = $.extend({}, {height: '', position: ''}, style.outer);
             style.inner = $.extend({}, {position: 'relative', top: '', left: '', bottom: '', width: '',  transform: ''}, style.inner);
 
             return style;
@@ -472,7 +425,7 @@
          */
        stickyPosition: function(force){
             if( ! this.$sidebar.is(':visible') || this._breakpoint ) return;
-
+            
             force = force || false;
             
             var offsetTop = this.options.topSpacing;
@@ -492,13 +445,14 @@
                 
                 var affixedEvent = $.Event('affixed.'+ affixType.replace('viewport', '') + StickySidebar.EVENT_KEY);
                 
+                this.$sidebar.css(style.outer);
                 this.$sidebarInner.css(style.inner);
+
                 this.$sidebar.trigger(affixedEvent);
+            } else {
+                if( this._initialized ) this.$sidebarInner.css('left', style.inner.left);
             }
 
-            if( this._initialized ) this.$sidebarInner.css('left', style.inner.left);
-
-            this.$sidebar.css(style.outer);
             this.affixedType = affixType;
         },
 
@@ -527,16 +481,6 @@
             this.stickyPosition(true);
         },
 
-        /**
-         * RequestAnimationFrame wrapper.
-         * @public
-         */
-        animateSticky: function(){
-            requestAnimationFrame( $.proxy(function(){
-                this.stickyPosition();
-            }, this) );
-        },
-        
         /**
          * Add resize sensor listener to specifc element.
          * @public
@@ -617,15 +561,10 @@
          */
         _resizeListener: function(event){
             var _window = event.target || event.srcElement;
+            var trigger = _window.resizeTrigger;
             
-            cancelAnimationFrame(_window.resizeSensorRAF);
-
-            _window.resizeSensorRAF = requestAnimationFrame(function(){
-                var trigger = _window.resizeTrigger;
-
-                trigger.resizeListeners.forEach(function(callback){
-                    callback.call(trigger, event);
-                });
+            trigger.resizeListeners.forEach(function(callback){
+                callback.call(trigger, event);
             });
         },
 

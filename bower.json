@@ -18,7 +18,6 @@
     "docs/.sass-cache"
   ],
   "dependencies": {
-    "raf.js": "^0.0.4",
     "jquery": "^3.2.1"
   },
   "homepage": "https://github.com/abouolia/sticky-sidebar"
