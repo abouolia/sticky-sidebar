@@ -17,16 +17,9 @@ module.exports = function(grunt) {
 				},
 			},
 		},
-		copy: {
-			main: {
-				expand: true,
-				src: 'sticky-sidebar.js',
-				dest: 'docs/js'
-			},
-		},
 		watch: {
 			files: ['<%= jshint.files %>'],
-			tasks: ['jshint', 'uglify', 'copy']
+			tasks: ['jshint', 'uglify']
 		}
 	});
 
@@ -36,5 +29,5 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 
-	grunt.registerTask('default', ['jshint', 'uglify', 'copy']);
+	grunt.registerTask('default', ['jshint', 'uglify']);
 };
