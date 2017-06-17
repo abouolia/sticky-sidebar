@@ -1,0 +1,29 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
+<script type="text/javascript">
+	 
+	function scrollUpDown(_document, _window){
+		var scrollHeight = $(_document).height() - $(_window).height();
+
+		$(_document.body).stop().animate({
+			scrollTop: 0
+		}, 500).animate({
+			scrollTop: scrollHeight
+		}, 2000).delay(200).animate({
+			scrollTop: 0
+		}, 2000);
+	}
+
+	window.scrollUpDown;
+
+	$(document).ready(function(){
+
+		$('.box-demo-button-wrapper button').on('click', function(){
+			var iframe = $(this).parent().find('+ .box-demo').find('iframe')[0];
+
+			scrollUpDown(iframe.contentDocument, iframe.contentWindow);
+		});
+
+	});
+ 
+</script>
