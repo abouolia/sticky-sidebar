@@ -52,12 +52,14 @@
 		}
 
 		footer{
-			height: 75vh;
+			height: 300px;
+			height: 85vh;
 			border: 2px dotted black;
 			margin-top: 20px;
 			text-align: center;
 			color: #8e8d8d;
-			line-height: 75vh;
+			line-height: 300px;
+			line-height: 85vh;
 			background: rgba(0, 0, 0, 0.02);
 		}
 
@@ -102,7 +104,7 @@
 	</footer>
 
 	<script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
-	<script type="text/javascript" src="../js/sticky-sidebar.pkgd.js"></script>
+	<script type="text/javascript" src="../js/sticky-sidebar.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
 
@@ -110,7 +112,7 @@
 				topSpacing: 20,
 				bottomSpacing: 20,
 				containerSelector: '.container',
-				innerWrapperClass: 'sidebar__inner'
+				innerWrapperSelector: '.sidebar__inner'
 			});
 		});
 	</script>

@@ -91,7 +91,7 @@
          * Inner wrapper selector.
          * @type {String}
          */
-        innerWrapSelector: '.inner-wrapper-sticky',
+        innerWrapperSelector: '.inner-wrapper-sticky',
         
         /**
          * The name of CSS class to apply to elements when they have become stuck.
@@ -154,8 +154,8 @@
             this.$sidebar.trigger('initialize' + StickySidebar.EVENT_KEY);
             
             // Get sticky sidebar inner wrapper, if not found, will create one.
-            if( this.options.innerWrapSelector ){
-                this.$sidebarInner = this.$sidebar.find(this.options.innerWrapSelector);
+            if( this.options.innerWrapperSelector ){
+                this.$sidebarInner = this.$sidebar.find(this.options.innerWrapperSelector);
 
                 if( 0 === this.$sidebarInner.length )
                     this.$sidebarInner = false;

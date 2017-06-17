@@ -2,7 +2,7 @@
 layout: default
 ---
 
-[Sticky Sidebar](http://github.com/abouolia/sticky-sidebar) is jQuery plugin for making intelligent and high performance sticky sidebar, works with sidebar if it's bigger or smaller than viewport, has resize sensor to re-calculate its dimensions automatically when size of sidebar or its container is changed, supports multiply sidebars in once and compatible with Firefox, Chrome, Safari, and IE9+. Source can be found on [Github](http://github.com/abouolia/sticky-sidebar).
+[Sticky Sidebar](http://github.com/abouolia/sticky-sidebar) is jQuery plugin for making intelligent and high performance sticky sidebar, works with sidebar if it's bigger or smaller than viewport, has resize sensor to re-calculate its dimensions automatically when size of sidebar or  container is changed, supports multiply sidebars in once and compatible with Firefox, Chrome, Safari, and IE9+. Source can be found on [Github](http://github.com/abouolia/sticky-sidebar).
 
 <iframe src="https://ghbtns.com/github-btn.html?user=abouolia&amp;repo=sticky-sidebar&amp;type=watch&amp;count=true&amp;size=large"
   allowtransparency="true" frameborder="0" scrolling="0" width="170" height="30"></iframe><br/>
@@ -14,7 +14,7 @@ layout: default
 Just call ``$(ELEMENT).stickySidebar()`` on the elements that you want to be sticky when scrolling up/down inside their parent.
 
 {% highlight javascript %}
-$('#sidebar').stickySidebar({innerWrapperClass: 'sidebar__inner'});
+$('#sidebar').stickySidebar({topSpacing: 20});
 {% endhighlight javascript %}
 
 <div class="box-demo-button-wrapper">
@@ -31,13 +31,14 @@ $('#sidebar').stickySidebar({innerWrapperClass: 'sidebar__inner'});
 	</div>
 </div>
 
+<a href="./examples/basic.html" target="_blank">Basic Example</a>
 
 ### Scrollable Sticky Element
 
 Sticky sidebar smart enough to handle sidebar when it's taller than viewport. You don't have to worry about content, it will scroll sidebar independently up and down.
 
 {% highlight javascript %}
-$('#sidebar').stickySidebar({innerWrapperClass: 'sidebar__inner'});
+$('#sidebar').stickySidebar({topSpacing: 20});
 {% endhighlight javascript %}
 
 <div class="box-demo-button-wrapper">
@@ -54,15 +55,14 @@ $('#sidebar').stickySidebar({innerWrapperClass: 'sidebar__inner'});
 	</div>
 </div>
 
+<a href="./examples/scrollable-element.html" target="_blank">Scrollable Sticky Element</a>
 
 ### Multiply Sidebars 
 
 Can handle multiply sidebars, by calling ``$(ELEMENT1, ELEMENT2).stickySidebar()`` on all elements at once.
 
 {% highlight javascript %}
-$('#sidebar, #sidebar2').stickySidebar({
-    innerWrapperClass: 'sidebar__inner'
-});
+$('#sidebar, #sidebar2').stickySidebar({topSpacing: 20});
 {% endhighlight javascript %}
 
 <div class="box-demo-button-wrapper">
@@ -82,9 +82,11 @@ $('#sidebar, #sidebar2').stickySidebar({
 Or if you want to give each sidebar different options, by calling.
 
 {% highlight javascript %}
-$(ELEMENT1).stickySidebar({containerSelector: '.container'});
-$(ELEMENT2).stickySidebar({containerSelector: '.main-content'})
+$(ELEMENT1).stickySidebar();
+$(ELEMENT2).stickySidebar();
 {% endhighlight javascript %}
+
+<a href="./examples/multiply-elements.html" target="_blank">Multiply Sidebar</a>
 
 --------------------------
 
@@ -128,7 +130,7 @@ Your website's html structure has to be similer to this in order to work:
 </div>
 {% endhighlight html %}
 
-Note that inner sidebar wrapper ``.sidebar__innner`` is optional but highly recommended, if you don't write it yourself, the script will create one for you. but this may cause many problems.
+Note that inner sidebar wrapper ``.sidebar__innner`` is optional but highly recommended, if you don't write it yourself, the script will create one for you under class name ``inner-wrapper-sticky``. but this may cause many problems.
 
 For the above example, you can use the following JavaScript:
 
@@ -139,7 +141,10 @@ For the above example, you can use the following JavaScript:
 <script type="text/javascript">
     $(document).ready(function(){
         $("#sidebar").stickySidebar({
-            containerSelector: '.sidebar__inner'
+            containerSelector: '#main-content',
+            innerWrapperSelector: '.sidebar__inner',
+            topSpacing: 20,
+            bottomSpacing: 20
         });	
     });
 </script>
@@ -177,8 +182,8 @@ Next you are going to need some CSS just to improve performance and prevent repa
 }
 
 .sidebar__inner{
-    transform: translate3d(0, 0, 0);
     transform: translate(0, 0); /* For browsers don't support translate3d. */
+    transform: translate3d(0, 0, 0);
     will-change: position, transform;
 }
 {% endhighlight css %}
@@ -215,12 +220,12 @@ Defaults to the closest parent of the sticky element. Highly recommend to define
 $('#element').stickySidebar({containerSelector: '.container'})
 {% endhighlight javascript %}
 
-#### innerWrapperClass
+#### innerWrapperSelector
 
-Inner wrapper class of sticky sidebar, if the plugin is not found this wrapper inside sidebar element will create one. Highly recommended to write inner wrapper of sidebar yourself than add its class name to this option. ``Default: inner-wrapper-sticky``.
+inner wrapper selector of sticky sidebar, if the plugin is not found this wrapper inside sidebar element will create one for you under class name ``inner-wrapper-sticky``. Highly recommended to write inner wrapper of sidebar yourself than add its selector to this option. ``Default: .inner-wrapper-sticky``.
 
 {% highlight javascript %}
-$('#element').stickySidebar({innerWrapperClass: 'sidebar__inner'});
+$('#element').stickySidebar({innerWrapperSelector: '.sidebar__inner'});
 {% endhighlight javascript %}
 
 #### resizeSensor 
@@ -317,7 +322,7 @@ $('.sidebar').stickySidebar('destroy');
 
 Sticky sidebar plugin takes scrolling preformance very seriously, It’s built from the ground up to let you have sticky elements without incurring scroll lag or jank. 
 
-The biggest cause of scrolling jank is ``onScroll`` has a lot of work. But in this plugin we cached all dimensions and all animate functions inside `requestAnimationFrame` function, as well as adding `will-change: transform` and working with `translate(Y, X)` instead of `top: Y; Left: X;` increases performance significantly, We built Sticky sidebar plugin prevents repainting and reflow to make it smooth as much as possible.
+The biggest cause of scrolling jank is ``onScroll`` has a lot of work. But in this plugin we cached all dimensions as well as adding `will-change: transform` and working with `translate(Y, X)` instead of `top: Y; Left: X;` increases performance significantly, We built Sticky sidebar plugin prevents repainting and reflow to make it smooth as much as possible.
 
 -----------------------------------
 

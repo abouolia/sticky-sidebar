@@ -69,20 +69,21 @@
 		}
 
 		footer{
-			height: 75vh;
+			height: 300px;
+			height: 85vh;
 			border: 1px dotted black;
 			margin-top: 20px;
 			text-align: center;
 			color: #8e8d8d;
-			line-height: 150px;
+			line-height: 300px;
+			line-height: 85vh;
 			background: rgba(0, 0, 0, 0.02);
 		}
 
 		footer p{
 			margin: 0;
-			line-height: 75vh;
+			line-height: 85vh;
 		}
-
 	</style>
 
 </head>
@@ -130,12 +131,12 @@
 	</footer>
 
 	<script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
-	<script type="text/javascript" src="../js/sticky-sidebar.pkgd.js"></script>
+	<script type="text/javascript" src="../js/sticky-sidebar.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
 			$('#sidebar, #sidebar-2').stickySidebar({
 				containerSelector: '.container',
-				innerWrapperClass: 'sidebar__inner',
+				innerWrapperSelector: '.sidebar__inner',
 				topSpacing: 15,
 				bottomSpacing: 15
 			});
