@@ -602,24 +602,17 @@
 
     /**
      * Sticky Sidebar Plugin Defintion.
-     * @param {Object|String} - config
+     * @param config {Object|String}
      */
     function _jQueryPlugin(config){
         return this.each(function(){
-            var $this = $(this),
-                data = $(this).data('stickySidebar');
-                
-            if( ! data ){
-                data = new StickySidebar(this, typeof config == 'object' && config);
-                $this.data('stickySidebar', data);
-            }
+            var $this   = $(this),
+                data    = $this.data('stickySidebar'),
+                options = typeof config == 'object' && config;
 
-            if( 'string' === typeof config){
-                if (data[config] === undefined && ['destroy', 'updateSticky'].indexOf(config) === -1) {
-                    throw new Error('No method named "'+ config +'"');
-                }
-                data[config]();
-            }
+            if (!data && /destroy|updateSticky/.test(config)) return;
+            if (!data) $this.data('stickySidebar', (data = new StickySidebar(this, options)));
+            if (typeof config === 'string') data[config]();
         });
     }
 
