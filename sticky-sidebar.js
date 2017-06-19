@@ -9,12 +9,12 @@
     var _window = $(window);
 
     /**
-	 * Sticky Sidebar.
+     * Sticky Sidebar.
      * @public
-	 * @constructor
+     * @constructor
      * @param {HTMLElement|jQuery} sidebar - The sidebar element
      * @param {Object} options - The options of sticky sidebar.
-	 */
+     */
     function StickySidebar(sidebar, options){
         // Current options set by the caller and including defaults.
         this.options = $.extend({}, StickySidebar.DEFAULTS, options);
@@ -29,7 +29,7 @@
         // Current Affix Type of sidebar element.
         this.affixedType = 'static';
 
-		this._initialized = false;
+        this._initialized = false;
         this._breakpoint = false;
         this._resizeListeners = [];
         
