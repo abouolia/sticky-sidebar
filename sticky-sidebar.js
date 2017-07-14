@@ -16,7 +16,6 @@
      * @param {Object} options - The options of sticky sidebar.
      */
     function StickySidebar(sidebar, options){
-        // Current options set by the caller and including defaults.
         this.options = $.extend({}, StickySidebar.DEFAULTS, options);
 
         // Sidebar wrapper and inner wrapper element.
@@ -28,6 +27,10 @@
 
         // Current Affix Type of sidebar element.
         this.affixedType = 'static';
+        this.support = {
+            transform: false,
+            transform3d: false
+        };
 
         this._initialized = false;
         this._breakpoint = false;
@@ -111,37 +114,6 @@
          */
         minWidth: false
     };
-    
-    /**
-     * Detarmine if the browser is Internet Explorer.
-     * @function
-     * @static
-     */
-    StickySidebar.isIE = function(){
-        return Boolean(navigator.userAgent.match(/Trident/));
-    };
-
-    /**
-     * Detarmine if the browser supports CSS transfrom feature.
-     * @function
-     * @static
-     * @param {Boolean} transform3d - Detect transform with translate3d.
-     */
-    StickySidebar.supportTransform = function(transform3d){
-        var result = false,
-            property = (transform3d) ? 'perspective' : 'transform',
-            upper = property.charAt(0).toUpperCase() + property.slice(1),
-            prefixes = 'Webkit Moz O ms'.split(' '),
-            style = $('<support>').get(0).style;
-
-        $.each((property + ' ' + prefixes.join(upper + ' ') + upper).split(' '), function(i, property) {
-            if (style[property] !== undefined) {
-                result = property;
-                return false;
-            }
-        });
-        return result;
-    };
 
     StickySidebar.prototype = {
 
@@ -151,6 +123,7 @@
          * @public
          */
         initialize: function(){
+            this._setSupportFeatures();
             this.$sidebar.trigger('initialize' + StickySidebar.EVENT_KEY);
             
             // Get sticky sidebar inner wrapper, if not found, will create one.
@@ -393,10 +366,10 @@
                 case 'VIEWPORT-UNBOTTOM':
                      style.inner = {position: 'absolute', top: dimensions.containerTop + dimensions.translateY};
                         
-                    if( StickySidebar.supportTransform(translate3d = true) )
+                    if( this.support.transform3d )
                         style.inner = {transform: 'translate3d(0, '+ dimensions.translateY +'px, 0)'};
 
-                    else if ( StickySidebar.supportTransform() )
+                    else if ( this.support.transform )
                         style.inner = {transform: 'translate(0, '+ dimensions.translateY +'px)'};
                     break;
             }
@@ -479,6 +452,17 @@
         updateSticky: function(){
             this.calcDimensions();
             this.stickyPosition(true);
+        },
+
+        /**
+         * Set browser support features to the public property.
+         * @private
+         */
+        _setSupportFeatures: function(){
+            var support  = this.support;
+
+            support.transform = Boolean(StickySidebar.supportTransform());
+            support.transform3d = Boolean(StickySidebar.supportTransform(true));
         },
 
         /**
@@ -592,6 +576,37 @@
         }
     };
 
+    /**
+     * Detarmine if the browser is Internet Explorer.
+     * @function
+     * @static
+     */
+    StickySidebar.isIE = function(){
+        return Boolean(navigator.userAgent.match(/Trident/));
+    };
+
+    /**
+     * Detarmine if the browser supports CSS transfrom feature.
+     * @function
+     * @static
+     * @param {Boolean} transform3d - Detect transform with translate3d.
+     */
+    StickySidebar.supportTransform = function(transform3d){
+        var result = false,
+            property = (transform3d) ? 'perspective' : 'transform',
+            upper = property.charAt(0).toUpperCase() + property.slice(1),
+            prefixes = 'Webkit Moz O ms'.split(' '),
+            style = $('<support>').get(0).style;
+
+        $.each((property + ' ' + prefixes.join(upper + ' ') + upper).split(' '), function(i, property) {
+            if (style[property] !== undefined) {
+                result = property;
+                return false;
+            }
+        });
+        return result;
+    };
+    
     /**
      * Sticky Sidebar Plugin Defintion.
      * @param {Object|String} - config
