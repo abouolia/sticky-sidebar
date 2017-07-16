@@ -123,13 +123,13 @@ const StickySidebar = (() => {
         lastViewportTop: 0,
       };
 
-      // Initialize sticky sidebar for first time.
-      this.initialize();
-
       // Bind all event handlers for referencability.
       ['_onScroll', '_onResize', 'updateSticky'].forEach((method) => {
         this[method] = this[method].bind(this);
       });
+
+      // Initialize sticky sidebar for first time.
+      this.initialize();
     }
 
     /**
@@ -314,7 +314,7 @@ const StickySidebar = (() => {
           affixType = 'VIEWPORT-TOP';
 
         } else if( ! this.isSidebarFitsViewport() && dims.containerTop <= colliderTop ){
-          affixType = 'VIEWPORT-BOTTOM';
+          affixType = 'VIEWPORT-UNBOTTOM';
         }
       // When browser is scrolling up.
       } else {
@@ -431,13 +431,13 @@ const StickySidebar = (() => {
         else
           this.sidebar.classList.add(this.options.stickyClass);
         
-        for( key in style.outer ){
+        for( let key in style.outer ){
           let _unit = ('number' === typeof style.outer[key]) ? 'px' : '';
           this.sidebar.style[key] = style.outer[key];
         }
 
-        for( key in style.inner ){
-          let _unit = ('number' === typeof style.inner[key]) ? 'px' : _unit;
+        for( let key in style.inner ){
+          let _unit = ('number' === typeof style.inner[key]) ? 'px' : '';
           this.sidebarInner.style[key] = style.inner[key] + _unit;
         }
 
@@ -540,7 +540,7 @@ const StickySidebar = (() => {
       wrapper.setAttribute('style', style);
       wrapper.resizeElement = element;
 
-      wrapper.addEventListener('load', (event) => {
+      wrapper.addEventListener('load', function(event){
         this.contentDocument.defaultView.resizeTrigger = this.resizeElement;
         this.contentDocument.defaultView.addEventListener('resize', this._resizeListener);
       });
@@ -581,7 +581,7 @@ const StickySidebar = (() => {
       this.removeEventListener('update' + EVENT_KEY, this.updateSticky);
 
       var styleReset = {position: '', top: '', left: '', bottom: '', width: '',  transform: ''};
-      for( key in styleReset )
+      for( let key in styleReset )
         this.sidebar.style[key] = styleReset[key];
 
       if( this.options.resizeSensor ){
