@@ -75,7 +75,7 @@ const StickySidebar = (() => {
      * @param {Object} options - The options of sticky sidebar.
      */
     constructor(sidebar, options = {}){
-      this.options = StickySidebar.extend(StickySidebar.DEFAULTS, options);
+      this.options = StickySidebar.extend(DEFAULTS, options);
 
       // Sidebar element query if there's no one, throw error.
       this.sidebar = ('string' === typeof sidebar ) ? document.querySelector(sidebar) : sidebar;
@@ -83,17 +83,19 @@ const StickySidebar = (() => {
         throw new Error("There is no specific sidebar element.");
 
       this.sidebarInner = false;
-      this.container = null;
+      this.container = this.sidebar.parentElement;
 
-      // Sidebar container element.
-      var containers = document.querySelectorAll(this.options.containerSelector);
-      containers.forEach((container, item) => {
-        if( ! container.contains(this.sidebar) ) return;
-        this.container = container;
-      });
+      // Container wrapper of the sidebar.
+      if( this.options.containerSelector ){
+        var containers = document.querySelectorAll(this.options.containerSelector);
+        containers.forEach((container, item) => {
+          if( ! container.contains(this.sidebar) ) return;
+          this.container = container;
+        });
 
-      if( null === this.container )
-        throw new Error("The container does not contains on the sidebar.");
+        if( ! containers.length )
+          throw new Error("The container does not contains on the sidebar.");
+      }
 
       // Current Affix Type of sidebar element.
       this.affixedType = 'static';
@@ -529,8 +531,7 @@ const StickySidebar = (() => {
      * @param {DOMElement} element - 
      */
     _appendResizeSensor(element){
-      if( 'static' == getComputedStyle(element).position )
-        element.style.position = 'relative';
+      element.style.position = 'relative';
 
       var wrapper = document.createElement('object');
       var style = 'display: block; position: absolute; top: 0; left: 0; height: 100%; width: 100%;' + 
@@ -648,7 +649,7 @@ const StickySidebar = (() => {
      */
     static extend(defaults, options){
       var results = {};
-      for( key in defaults ){
+      for( let key in defaults ){
         if( 'undefined' !== typeof options[key] ) results[key] = options[key];
         else results[key] = defaults[key];
       }
