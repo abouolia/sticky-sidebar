@@ -232,13 +232,13 @@ const StickySidebar = (() => {
       var dims = this.dimensions;
 
       // Container of sticky sidebar dimensions.
-      dims.containerTop = this.container.offsetTop;
+      dims.containerTop    = StickySidebar.offsetRelative(this.container).top;
       dims.containerHeight = this.container.clientHeight;
       dims.containerBottom = dims.containerTop + dims.containerHeight;
 
       // Sidebar dimensions.
       dims.sidebarHeight = this.sidebarInner.offsetWidth;
-      dims.sidebarWidth = this.sidebar.offsetWidth;
+      dims.sidebarWidth  = this.sidebar.offsetWidth;
       
       // Screen viewport dimensions.
       dims.viewportHeight = window.innerHeight;
@@ -253,13 +253,13 @@ const StickySidebar = (() => {
     _calcDimensionsWithScroll(){
       var dims = this.dimensions;
 
-      dims.sidebarLeft = this.sidebar.offsetLeft;
+      dims.sidebarLeft = StickySidebar.offsetRelative(this.sidebar).left;
 
-      dims.viewportTop = document.documentElement.scrollTop || document.body.scrollTop;
+      dims.viewportTop    = document.documentElement.scrollTop || document.body.scrollTop;
       dims.viewportBottom = dims.viewportTop + dims.viewportHeight;
-      dims.viewportLeft = document.documentElement.scrollLeft || document.body.scrollLeft;
+      dims.viewportLeft   = document.documentElement.scrollLeft || document.body.scrollLeft;
 
-      dims.topSpacing = this.options.topSpacing;
+      dims.topSpacing    = this.options.topSpacing;
       dims.bottomSpacing = this.options.bottomSpacing;
 
       if( 'function' === typeof dims.topSpacing )
@@ -654,6 +654,25 @@ const StickySidebar = (() => {
         else results[key] = defaults[key];
       }
       return results;
+    }
+
+    /**
+     * Get current coordinates left and top of specific element.
+     * @static
+     */
+    static offsetRelative(element){
+      var result = {left: 0, top: 0};
+      do{
+        let offsetTop = element.offsetTop;
+        let offsetLeft = element.offsetLeft;
+
+        if( ! isNaN(offsetTop) )
+          result.top += offsetTop;
+
+        if( ! isNaN(offsetLeft) )
+          result.left += offsetLeft;
+      } while( element = element.offsetParent )
+      return result;
     }
   }
 
