@@ -125,6 +125,11 @@ const StickySidebar = (() => {
         lastViewportTop: 0,
       };
 
+      // Bind event handlers for referencability.
+      ['_resizeListener'].forEach( (method) => {
+        this[method] = this[method].bind(this);
+      });
+
       // Initialize sticky sidebar for first time.
       this.initialize();
     }
@@ -194,8 +199,8 @@ const StickySidebar = (() => {
       this.sidebar.addEventListener('update' + EVENT_KEY, this);
 
       if( this.options.resizeSensor ){
-        this.addResizerListener(this.sidebarInner, this.updateSticky);
-        this.addResizerListener(this.container, this.updateSticky);
+        this.addResizerListener(this.sidebarInner, this);
+        this.addResizerListener(this.container, this);
       }
     }
 
@@ -548,7 +553,7 @@ const StickySidebar = (() => {
         var _window = resizeTrigger.contentDocument.defaultView;
 
         _window.removeEventListener('resize', this._resizeListener);
-        resizeTrigger = element.querySelector(resizeTrigger).remove();
+        resizeTrigger = resizeTrigger.remove();
       }
     }
 
@@ -567,9 +572,11 @@ const StickySidebar = (() => {
       wrapper.setAttribute('style', style);
       wrapper.resizeElement = element;
 
-      wrapper.addEventListener('load', function(event){
-        this.contentDocument.defaultView.resizeTrigger = this.resizeElement;
-        this.contentDocument.defaultView.addEventListener('resize', this._resizeListener);
+      wrapper.addEventListener('load', (event) => {
+        let target = event.currentTarget;
+
+        target.contentDocument.defaultView.resizeTrigger = target.resizeElement;
+        target.contentDocument.defaultView.addEventListener('resize', this._resizeListener);
       });
 
       wrapper.type = 'text/html';
@@ -590,6 +597,10 @@ const StickySidebar = (() => {
       var trigger = _window.resizeTrigger;
         
       trigger.resizeListeners.forEach((callback) => {
+        if( 'object' === typeof callback ){
+            callback = callback.handleEvent;
+            trigger = this;
+        }
         callback.call(trigger, event);
       });
     }
