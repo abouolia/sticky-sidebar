@@ -101,7 +101,7 @@ const StickySidebar = (() => {
 
       // Current Affix Type of sidebar element.
       this.affixedType = 'static';
-      this.direction = 'bottom';
+      this.direction = 'down';
       this.support = {
         transform:   false,
         transform3d: false
@@ -124,11 +124,6 @@ const StickySidebar = (() => {
         viewportTop: 0, 
         lastViewportTop: 0,
       };
-
-      // Bind all event handlers for referencability.
-      ['_onScroll', '_onResize', 'updateSticky'].forEach((method) => {
-        this[method] = this[method].bind(this);
-      });
 
       // Initialize sticky sidebar for first time.
       this.initialize();
@@ -193,10 +188,10 @@ const StickySidebar = (() => {
      * @protected
      */
     bindEvents(){
-      window.addEventListener('resize', this._onResize, {passive: true});
-      window.addEventListener('scroll', this._onScroll, {passive: true});
+      window.addEventListener('resize', this, {passive: true});
+      window.addEventListener('scroll', this, {passive: true});
 
-      this.sidebar.addEventListener('update' + EVENT_KEY, this.updateSticky);
+      this.sidebar.addEventListener('update' + EVENT_KEY, this);
 
       if( this.options.resizeSensor ){
         this.addResizerListener(this.sidebarInner, this.updateSticky);
@@ -205,24 +200,11 @@ const StickySidebar = (() => {
     }
 
     /**
-     * Handles scroll top/bottom when detected.
-     * @protected
+     * Handles all events of the plugin.
      * @param {Object} event - Event object passed from listener.
      */
-    _onScroll(event){
-      this._calcDimensionsWithScroll();
-      this.stickyPosition();
-    }
-
-    /**
-     * Holds resize event when detected. When the browser is resizes re-calculate
-     * all dimensions of sidebar and container.
-     * @protected
-     * @param {Object} event - Event object passed from listener.
-     */
-    _onResize(event){
-      this._widthBreakpoint();
-      this.updateSticky();
+    handleEvent(event){
+      this.updateSticky(event);
     }
 
     /**
@@ -281,12 +263,17 @@ const StickySidebar = (() => {
     }
 
     /**
-     * Detarmine wheather the page is scrolling to top.
-     * @public
-     * @return {Boolean} 
+     * Observe browser scrolling direction top and down.
      */
-    isScrollingTop(){
-      return this.dimensions.viewportTop < this.dimensions.lastViewportTop;
+    observeScrollDir(){
+      var dims = this.dimensions;
+      if( dims.lastViewportTop === dims.viewportTop ) return;
+
+      var furthest = 'down' === this.direction ? Math.min : Math.max;
+      
+      // If the browser is scrolling not in the same direction.
+      if( dims.viewportTop === furthest(dims.viewportTop, dims.lastViewportTop) )
+        this.direction = 'down' === this.direction ?  'up' : 'down';
     }
 
     /**
@@ -306,7 +293,7 @@ const StickySidebar = (() => {
       var colliderBottom = dims.viewportBottom - dims.bottomSpacing;
 
       // When browser is scrolling top.
-      if( this.isScrollingTop() ){
+      if( 'up' === this.direction ){
         if( colliderTop <= dims.containerTop ){
           dims.translateY = 0;
           affixType = 'STATIC';
@@ -470,12 +457,37 @@ const StickySidebar = (() => {
     }
 
     /**
-     * Force re-calculate dimesnstions of sticky sidebar, container and screen viewport.
+     * Switchs between functions stack for each event type, if there's no 
+     * event, it will re-initialize sticky sidebar.
      * @public
      */
-    updateSticky(){
-      this.calcDimensions();
-      this.stickyPosition(true);
+    updateSticky(event = {}){
+      if( this._running ) return;
+      this._running = true;
+      
+      ((eventType) => {
+        requestAnimationFrame(() => {
+          switch( eventType ){
+            // When browser is scrolling and re-calculate just dimensions
+            // within scroll. 
+            case 'scroll':
+              this._calcDimensionsWithScroll();
+              this.observeScrollDir();
+              this.stickyPosition();
+              break;
+
+            // When browser is resizing or there's no event, observe width
+            // breakpoint and re-calculate dimensions.
+            case 'resize':
+            default: 
+              this._widthBreakpoint();
+              this.calcDimensions();
+              this.stickyPosition('resize' === eventType || false);
+              break;
+          }
+          this._running = false;
+        });
+      })(event.type);
     }
 
     /**
