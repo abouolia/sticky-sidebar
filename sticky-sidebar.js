@@ -87,7 +87,9 @@ const StickySidebar = (() => {
 
       // Container wrapper of the sidebar.
       if( this.options.containerSelector ){
-        var containers = document.querySelectorAll(this.options.containerSelector);
+        let containers = document.querySelectorAll(this.options.containerSelector);
+        containers = Array.prototype.slice.call(containers);
+
         containers.forEach((container, item) => {
           if( ! container.contains(this.sidebar) ) return;
           this.container = container;
@@ -237,7 +239,7 @@ const StickySidebar = (() => {
       dims.containerBottom = dims.containerTop + dims.containerHeight;
 
       // Sidebar dimensions.
-      dims.sidebarHeight = this.sidebarInner.offsetWidth;
+      dims.sidebarHeight = this.sidebarInner.offsetHeight;
       dims.sidebarWidth  = this.sidebar.offsetWidth;
       
       // Screen viewport dimensions.
@@ -378,13 +380,12 @@ const StickySidebar = (() => {
           break;
         case 'CONTAINER-BOTTOM':
         case 'VIEWPORT-UNBOTTOM':
-          style.inner = {position: 'absolute', top: dims.containerTop + dims.translateY};
+          let translate = this._getTranslate(0, dims.translateY + 'px');
           
-          if( this.support.transform3d )
-            style.inner = {transform: 'translate3d(0, '+ dims.translateY +'px, 0)'};
-
-          else if ( this.support.transform )
-            style.inner = {transform: 'translate(0, '+ dims.translateY +'px)'};
+          if( translate )
+            style.inner = {transform: translate};
+          else 
+            style.inner = {position: 'absolute', top: dims.containerTop + dims.translateY};
           break;
       }
       
@@ -399,7 +400,7 @@ const StickySidebar = (() => {
 
       style.outer = StickySidebar.extend({height: '', position: ''}, style.outer);
       style.inner = StickySidebar.extend({position: 'relative', top: '', left: '',
-          bottom: '', width: '',  transform: 'translate(0, 0)'}, style.inner);
+          bottom: '', width: '',  transform: this._getTranslate()}, style.inner);
 
       return style;
     }
@@ -486,6 +487,20 @@ const StickySidebar = (() => {
 
       support.transform = StickySidebar.supportTransform();
       support.transform3d = StickySidebar.supportTransform(true);
+    }
+
+    /**
+     * Get translate value, if the browser supports transfrom3d, it will adopt it.
+     * and the same with translate. if browser doesn't support both return false.
+     * @param {Number} y - Value of Y-axis.
+     * @param {Number} x - Value of X-axis.
+     * @param {Number} z - Value of Z-axis.
+     * @return {String|False}
+     */
+    _getTranslate(y = 0, x = 0, z = 0){
+      if( this.support.transform3d ) return 'translate3d(' + y +', '+ x +', '+ z +')';
+      else if( this.support.translate ) return 'translate('+ y +', '+ x +')';
+      else return false;
     }
 
     /**
