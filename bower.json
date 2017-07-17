@@ -1,6 +1,6 @@
 {
   "name": "sticky-sidebar",
-  "description": "A jQuery plugin for making smart and high performance.",
+  "description": "A JavaScript plugin for making smart and high performance.",
   "version": "1.0.0",
   "authors": [
     "Ahmed Bouhuolia <a.bouhuolia@gmail.com>"
@@ -17,8 +17,9 @@
     "docs/_site",
     "docs/.sass-cache"
   ],
-  "dependencies": {
-    "jquery": "^3.2.1"
-  },
-  "homepage": "https://github.com/abouolia/sticky-sidebar"
+  "dependencies": {},
+  "homepage": "https://github.com/abouolia/sticky-sidebar",
+  "devDependencies": {
+    "raf.js": "~0.0.4"
+  }
 }
