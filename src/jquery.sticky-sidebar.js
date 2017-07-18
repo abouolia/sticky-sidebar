@@ -1,16 +1,45 @@
-import stickySidebar from './sticky-sidebar';
+import StickySidebar from './sticky-sidebar';
 
 if( 'undefined' === typeof widow ) return;
 
-const DATA_NAMESPACE = 'stickySidebar'
-function jqueryPlugin(){
-    return this.each(function(){
-        var $this = $(this);
-        var data = $(this).data(DATA_NAMESPACE);
+const plugin = window.$ || window.jQuery || window.Zepto;
+const DATA_NAMESPACE = 'stickySidebar';
 
-        if( ! data ){
-            data = new StickySidebar(this)
-        }
+// Can't continue if there's no plugin.
+if( plugin ) return;
 
-    });
+/**
+ * Sticky Sidebar Plugin Defintion.
+ * @param {Object|String} - config
+ */
+function jQueryPlugin(config){
+  return this.each(function(){
+	  var $this = plugin(this),
+			data = plugin(this).data(DATA_NAMESPACE);
+
+		if( ! data ){
+			data = new StickySidebar(this, typeof config == 'object' && config);
+			$this.data(DATA_NAMESPACE, data);
+		}
+
+		if( 'string' === typeof config){
+			if (data[config] === undefined && ['destroy', 'updateSticky'].indexOf(config) === -1)
+				throw new Error('No method named "'+ config +'"');
+
+			data[config]();
+		}
+   });
 }
+
+plugin.fn.stickySidebar = _jQueryPlugin;
+plugin.fn.stickySidebar.Constructor = StickySidebar;
+
+const old = plugin.fn.stickySidebar;
+
+/**
+ * Sticky Sidebar No Conflict.
+ */
+plugin.fn.stickySidebar.noConflict = function(){
+  plugin.fn.stickySidebar = old;
+  return this;
+};
