@@ -292,7 +292,7 @@
          * @return {Boolean}
          */
         isSidebarFitsViewport: function(){
-            return this.dimensions.sidebarHeight < this.dimensions.viewportHeight;
+            return this.dimensions.sidebarHeight + this.options.topSpacing < this.dimensions.viewportHeight;
         },
 
         /**
