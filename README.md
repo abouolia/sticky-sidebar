@@ -47,7 +47,7 @@ Your website's html structure has to be similer to this in order to work:
 </div>
 ````
 
-Note that inner sidebar wrapper ``.sidebar__innner`` is optional but highly recommended, if you don't write it yourself, the script will create one for you under class name ``inner-wrapper-sticky``. but this may cause many problems.
+Note that inner sidebar wrapper ``.sidebar__inner`` is optional but highly recommended, if you don't write it yourself, the script will create one for you under class name ``inner-wrapper-sticky``. but this may cause many problems.
 
 For the above example, you can use the following JavaScript:
 
