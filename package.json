@@ -21,7 +21,10 @@
     "gulp-concat": "^2.6.1",
     "gulp-header": "^1.8.9",
     "gulp-rename": "^1.2.2",
+    "gulp-rollup": "^2.14.0",
     "gulp-sourcemaps": "^2.6.0",
-    "gulp-uglify": "^3.0.0"
+    "gulp-uglify": "^3.0.0",
+    "gulp-util": "^3.0.8",
+    "rollup": "^0.49.1"
   }
 }
