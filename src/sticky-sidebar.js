@@ -711,12 +711,12 @@ const StickySidebar = (() => {
       return result;
     }
   }
-  
-  export default StickySidebar;
-
-  // Global
-  // -------------------------
-  window.StickySidebar = StickySidebar;
 
   return StickySidebar;
 })();
+
+export default StickySidebar;
+
+// Global
+// -------------------------
+window.StickySidebar = StickySidebar;
