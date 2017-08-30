@@ -2,19 +2,41 @@
 layout: default
 ---
 
-[Sticky Sidebar](http://github.com/abouolia/sticky-sidebar) is jQuery plugin for making intelligent and high performance sticky sidebar, works with sidebar if it's bigger or smaller than viewport, has resize sensor to re-calculate its dimensions automatically when size of sidebar or  container is changed, supports multiply sidebars in once and compatible with Firefox, Chrome, Safari, and IE9+. Source can be found on [Github](http://github.com/abouolia/sticky-sidebar).
+[Sticky Sidebar](http://github.com/abouolia/sticky-sidebar) is pure JavaScript plugin for making intelligent and high performance sticky sidebar, works with sidebar if it's taller or shorter than viewport, has resize sensor to re-calculate the dimensions automatically when size of sidebar or its container is changed, supports jQuery/Zepto and compatible with Firefox, Chrome, Safari, and IE9+. Source can be found on [Github](http://github.com/abouolia/sticky-sidebar).
 
 <iframe src="https://ghbtns.com/github-btn.html?user=abouolia&amp;repo=sticky-sidebar&amp;type=watch&amp;count=true&amp;size=large"
-  allowtransparency="true" frameborder="0" scrolling="0" width="170" height="30"></iframe><br/>
+  allowtransparency="true" frameborder="0" scrolling="0" width="170" height="30"></iframe>
 
-## Example 
+![alt text](http://localhost/test.png "Logo Title Text 1")
+
+0. [Why sticky sidebar is awesome?](#why-sticky-sidebar-is-awesome)
+1. [Examples](#example)
+2. [Installation](#)
+3. [Usage](#)
+4. [Configure Your CSS](#)
+5. [Options](#)
+6. [Events](#)
+7. [Public Methods](#)
+8. [Scrolling Performance](#)
+9. [jQuery/Zepto No Conflict](#)
+
+
+## Why sticky sidebar is awesome?
+* It does not re-calculate all dimensions when scrolling, just neccessary dimensions.
+* Super smooth without incurring scroll lag or jank and no page reflows.
+* Has resize sensor to re-calculate all dimenstions of the plugin when size of sidebar and its container is changed.
+* It has event trigger on each affix type to hook your code under particular situation.
+* Handle the sidebar when is tall or too short compared to the rest of the container.
+* It is super simple to setup.
+
+## Examples
 
 ### Basic 
 
-Just call ``$(ELEMENT).stickySidebar()`` on the elements that you want to be sticky when scrolling up/down inside their parent.
+Just call ``new StickySidebar('ELEMENT')`` on the element that you want to be sticky when scrolling up/down inside their parent.
 
 {% highlight javascript %}
-$('#sidebar').stickySidebar({topSpacing: 20});
+var sidebar = new StickySidebar('#sidebar', {topSpacing: 20});
 {% endhighlight javascript %}
 
 <div class="box-demo-button-wrapper">
@@ -38,7 +60,7 @@ $('#sidebar').stickySidebar({topSpacing: 20});
 Sticky sidebar smart enough to handle sidebar when it's taller than viewport. You don't have to worry about content, it will scroll sidebar independently up and down.
 
 {% highlight javascript %}
-$('#sidebar').stickySidebar({topSpacing: 20});
+var sidebar = new stickySidebar('#sidebar', {topSpacing: 20});
 {% endhighlight javascript %}
 
 <div class="box-demo-button-wrapper">
@@ -57,40 +79,9 @@ $('#sidebar').stickySidebar({topSpacing: 20});
 
 <a href="./examples/scrollable-element.html" target="_blank">Scrollable Sticky Element</a>
 
-### Multiply Sidebars 
-
-Can handle multiply sidebars, by calling ``$(ELEMENT1, ELEMENT2).stickySidebar()`` on all elements at once.
-
-{% highlight javascript %}
-$('#sidebar, #sidebar2').stickySidebar({topSpacing: 20});
-{% endhighlight javascript %}
-
-<div class="box-demo-button-wrapper">
-	<button>Scroll It!</button>
-	<div class="clearfix"></div>
-</div>
-
-<div class="box-demo">
-	<div class="box-demo__header">
-		<span class="box-demo__title">Multiply Sidebars</span>
-	</div>
-	<div class="box-demo__inner">
-		<iframe src="./examples/example3.html" width="100%" height="220"></iframe>
-	</div>
-</div>
-
-Or if you want to give each sidebar different options, by calling.
-
-{% highlight javascript %}
-$(ELEMENT1).stickySidebar();
-$(ELEMENT2).stickySidebar();
-{% endhighlight javascript %}
-
-<a href="./examples/multiply-elements.html" target="_blank">Multiply Sidebar</a>
-
 --------------------------
 
-## Install 
+## Installation
 
 You can install sticky sidebar jquery plugin from Bower, NPM or just simply download it from <a href="#">Github</a> than put ``sticky-sidebar.js`` file in your project folder.
 
@@ -109,7 +100,6 @@ If you are using NPM as package manager:
 ````
 npm install sticky-sidebar
 ````
-
 
 ------------------------
 
@@ -130,44 +120,21 @@ Your website's html structure has to be similer to this in order to work:
 </div>
 {% endhighlight html %}
 
-Note that inner sidebar wrapper ``.sidebar__innner`` is optional but highly recommended, if you don't write it yourself, the script will create one for you under class name ``inner-wrapper-sticky``. but this may cause many problems.
+Note that inner sidebar wrapper ``.sidebar__inner`` is optional but highly recommended, if you don't write it yourself, the script will create one for you under class name ``inner-wrapper-sticky``. but this may cause many problems.
 
 For the above example, you can use the following JavaScript:
 
 {% highlight html %}
-<script type="text/javascript" src="./js/jquery.js"></script>
 <script type="text/javascript" src="./js/sticky-sidebar.js"></script>
 
 <script type="text/javascript">
-    $(document).ready(function(){
-        $("#sidebar").stickySidebar({
-            containerSelector: '#main-content',
-            innerWrapperSelector: '.sidebar__inner',
-            topSpacing: 20,
-            bottomSpacing: 20
-        });	
+    var sidebar = new StickySidebar('#sidebar', {
+        containerSelector: '#main-content',
+        innerWrapperSelector: '.sidebar__inner',
+        topSpacing: 20,
+        bottomSpacing: 20
     });
 </script>
-{% endhighlight html %}
-
-Make sure to include ``sticky-sidebar.js`` script file after ``jquery.js``.
-
-
-#### Via data attributes
-
-To easily configure sticky sidebar to any element on the document using attributes, just add ``data-sticky-sidebar`` attribute with no value to element that you want to make it sticky. You can also configure its options, for example ``topSpacing`` option add it as attribute on element like that ``data-top-spacing="50"``
-
-Either by configure container of sticky element by adding ``data-sticky-sidebar-container`` attribute to container of sticky element. Below code will give you overview.
-
-{% highlight html %}
-<div id="container" data-sticky-sidebar-container>
-    <div id="#sidebar" data-sticky-sidebar data-top-spacing="50">
-    	<!-- Content Goes Here -->
-    </div>
-    <div id="content">
-    	<!-- Content Goes Here -->
-    </div>
-</div>	
 {% endhighlight html %}
 
 --------------------------
@@ -193,14 +160,28 @@ Next you are going to need some CSS just to improve performance and prevent repa
 
 ## Options
 
-Sticky sidebar plugins cames with options to configure how it works. All options below is optional.
+Sticky sidebar plugins cames with options to configure how it works. All options below is optional. Default values are presented below.
+
+{% highlight javascript %}
+
+var stickySidebar = new StickySidebar('#sidebar', {
+    topSpacing: 0,
+    bottomSpacing: 0,
+    containerSelector: false,
+    innerWrapperSelector: '.sidebar__inner',
+    resizeSensor: true,
+    stickyClass: 'is-affixed',
+    minWidth: 0
+});
+
+{% endhighlight javascript %}
 
 #### topSpacing
 
 Additional top spacing of the element when it becomes sticky. ``Default: 0``.
 
 {% highlight javascript %}
-$('#element').stickySidebar({topSpacing: 50});
+var sidebar = new StickySidebar('.sidebar', {topSpacing: 50});
 {% endhighlight javascript %}
 
 #### bottomSpacing
@@ -208,7 +189,7 @@ $('#element').stickySidebar({topSpacing: 50});
 Additional bottom spacing of the element when it becomes sticky. ``Default: 0``.
 
 {% highlight javascript %}
-$('#element').stickySidebar({bottomSpacing: 50});
+var sidebar = new StickySidebar('.sidebar', {bottomSpacing: 50});
 {% endhighlight javascript %}
 
 #### containerSelector
@@ -217,7 +198,7 @@ Container sidebar selector to know what the beginning and end of sticky element.
 Defaults to the closest parent of the sticky element. Highly recommend to define container selector.
 
 {% highlight javascript %}
-$('#element').stickySidebar({containerSelector: '.container'})
+var sidebar = new StickySidebar('.sidebar', {containerSelector: '.container'})
 {% endhighlight javascript %}
 
 #### innerWrapperSelector
@@ -225,7 +206,7 @@ $('#element').stickySidebar({containerSelector: '.container'})
 inner wrapper selector of sticky sidebar, if the plugin is not found this wrapper inside sidebar element will create one for you under class name ``inner-wrapper-sticky``. Highly recommended to write inner wrapper of sidebar yourself than add its selector to this option. ``Default: .inner-wrapper-sticky``.
 
 {% highlight javascript %}
-$('#element').stickySidebar({innerWrapperSelector: '.sidebar__inner'});
+var sidebar = new StickySidebar('.sidebar', {innerWrapperSelector: '.sidebar__inner'});
 {% endhighlight javascript %}
 
 #### resizeSensor 
@@ -233,7 +214,7 @@ $('#element').stickySidebar({innerWrapperSelector: '.sidebar__inner'});
 Sticky sidebar has resize sensor feature when size of sidebar or its container element is changed the plugin will re-calculate all dimensions. This option allow you to enable or disable resize sensor feature. ``Default: true``.
 
 {% highlight javascript %}
-$('#element').stickySidebar({resizeSensor: false});
+var sidebar = new StickySidebar('.sidebar', {resizeSensor: false});
 {% endhighlight javasccript %}
 
 #### stickyClass
@@ -241,7 +222,7 @@ $('#element').stickySidebar({resizeSensor: false});
 The name of CSS class to sidebar element when it has become stuck. ``Default: is-affixed``.
 
 {% highlight javascript %}
-$('#element').stickySidebar({stickyClass: 'is-affixed'});
+var sidebar = new StickySidebar('.sidebar', {stickyClass: 'is-affixed'});
 {% endhighlight javasccript %}
 
 #### minWidth
@@ -249,7 +230,7 @@ $('#element').stickySidebar({stickyClass: 'is-affixed'});
 The sidebar returns to its normal position if minimum width of window below this value. ``Default: 0``.
 
 {% highlight javascript %}
-$('#element').stickySidebar({minWidth: 300});
+var sidebar = new StickySidebar('.sidebar', {minWidth: 300});
 {% endhighlight javasccript %}
 
 ------------------------------
@@ -287,33 +268,41 @@ Sticky sidebar jQuery plugin has various of events are trigger when changing aff
 For example if you want to detect when element sticks top and bottom we might do:
 
 {% highlight javascript %}
-$('.sidebar').on('affix-top.sticky', function(){
+
+var sidebar = document.querySelector('.sidebar');
+
+var stickySidebar = new StickySidebar(sidebar);
+
+sidebar.addEventListener('affix-top.sticky', function(){
     console.log('Sidebar has stuck top of viewport.');
 });
 
-$('.sidebar').on('affix-bottom.sticky', function(event){
+sidebar.addEventListener('affix-bottom.sticky', function(event){
     console.log('Sidebar has stuck bottom of viewport.');
 });
 
 // Force to re-calculate all cached dimentions.
-$('.sidebar').trigger('update.sticky');
-
+stickySidebar.updateSticky();
 {% endhighlight javascript %}
 
 ------------------------------------
 
-## Methods
+## Public Methods
 
 ``updateSticky`` - Force re-calculate all cached dimensions of sidebar, container and viewport and update position of sidebar according to the new dimenstions. The same function of trigger event `update.sticky` read about events above.
 
 {% highlight javascript %}
-$('.sidebar').stickySidebar('updateSticky');
+var stickySidebar = new StickySidebar('.sidebar');
+
+stickySidebar.updateSticky();
 {% endhighlight javascript %}
 
 ``destroy`` - remove all inline style, helper classes and event listeners.
 
 {% highlight javascript %}
-$('.sidebar').stickySidebar('destroy');
+var stickySidebar = new StickySidebar('.sidebar');
+
+stickySidebar.destroy();
 {% endhighlight javascript %}
 
 ---------------------------------
@@ -326,7 +315,7 @@ The biggest cause of scrolling jank is ``onScroll`` has a lot of work. But in th
 
 -----------------------------------
 
-## No Conflict 
+## jQuery/Zepto No Conflict 
 
 Sometimes sticky sidebar plugin conflict with other plugins. In this case, namespace collisions can occasionally occur. if this happens, you may call ``.noConflict`` on the plugin to revert the value of ``$.fn.stickySidebar``.
 

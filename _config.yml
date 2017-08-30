@@ -5,6 +5,7 @@ description:
 
 # Build settings
 markdown: kramdown
-exclude: ["README.md"]
+exclude: ["README.md", "node_modules"]
 sass:
   style: compressed
+repository: abouolia/sticky-sidebar.git
