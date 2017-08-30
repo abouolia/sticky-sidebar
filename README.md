@@ -76,10 +76,15 @@ For the above example, you can use the following JavaScript:
 You can configure sticky sidebar as a jQuery plugin, just include ``jquery.sticky-sidebar.js`` instead ``sticky-sidebar.js`` file than configure it as any jQuery plugin.
 
 ````html
-$('#sidebar').stickySidebar({
+<script type="text/javascript" src="./js/jquery.js"></script>
+<script type="text/javascript" src="./js/sticky-sidebar.js"></script>
+
+<script type="text/javascript">
+  $('#sidebar').stickySidebar({
     topSpacing: 60,
     bottomSpacing: 60
-})
+  });
+</script>
 ````
 
 Make sure to include ``sticky-sidebar.js`` script file after ``jquery.js``.
