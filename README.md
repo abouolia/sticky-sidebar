@@ -1,4 +1,4 @@
-# Sticky Sidebar
+# Sticky Sidebar 
 
 jQuery plugin for making smart and high performance sticky sidebars.
 
@@ -6,9 +6,16 @@ jQuery plugin for making smart and high performance sticky sidebars.
 
 [Scrollable Sticky Element](https://abouolia.github.io/sticky-sidebar/examples/scrollable-element.html)
 
-[Multiply Sticky Elements](https://abouolia.github.io/sticky-sidebar/examples/multiply-elements.html)
-
 See for complete documents and examples [abouolia.github.com/sticky-sidebar](http://abouolia.github.com/sticky-sidebar)
+
+## Why sticky sidebar is awesome? 😎
+
+* It does not re-calculate all dimensions when scrolling, just neccessary dimensions.
+* Super smooth without incurring scroll lag or jank and no page reflows.
+* Has resize sensor to re-calculate all dimenstions of the plugin when size of sidebar and its container is changed.
+* It has event trigger on each affix type to hook your code under particular situation.
+* Handle the sidebar when is tall or too short compared to the rest of the container.
+* Zero dependencies and super simple to setup.
 
 ## Install
 
