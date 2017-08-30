@@ -7,21 +7,20 @@ layout: default
 <iframe src="https://ghbtns.com/github-btn.html?user=abouolia&amp;repo=sticky-sidebar&amp;type=watch&amp;count=true&amp;size=large"
   allowtransparency="true" frameborder="0" scrolling="0" width="170" height="30"></iframe>
 
-![Sticky Sidebar](http://localhost/test.png "Sticky Sidebar")
+![Sticky Sidebar](images/sticky-sidebar.png "Sticky Sidebar")
 
 0. [Why sticky sidebar is awesome?](#why-sticky-sidebar-is-awesome)
-1. [Examples](#example)
-2. [Installation](#)
-3. [Usage](#)
-4. [Configure Your CSS](#)
-5. [Options](#)
-6. [Events](#)
-7. [Public Methods](#)
-8. [Scrolling Performance](#)
-9. [jQuery/Zepto No Conflict](#)
+1. [Examples](#examples)
+2. [Installation](#installation)
+3. [Usage](#usage)
+4. [Configure Your CSS](#configure-your-css)
+5. [Options](#options)
+6. [Events](#events)
+7. [Public Methods](#public-methods)
+8. [Scrolling Performance](#scrolling-performance)
+9. [jQuery/Zepto No Conflict](#jqueryzepto-no-conflict)
 
-
-## Why sticky sidebar is awesome? 😎
+### Why sticky sidebar is awesome? 
 * It does not re-calculate all dimensions when scrolling, just neccessary dimensions.
 * Super smooth without incurring scroll lag or jank and no page reflows.
 * Has resize sensor to re-calculate all dimenstions of the plugin when size of sidebar and its container is changed.
@@ -31,7 +30,7 @@ layout: default
 
 ## Examples
 
-### Basic 
+#### Basic 
 
 Just call ``new StickySidebar('ELEMENT')`` on the element that you want to be sticky when scrolling up/down inside their parent.
 
@@ -55,7 +54,7 @@ var sidebar = new StickySidebar('#sidebar', {topSpacing: 20});
 
 <a href="./examples/basic.html" target="_blank">Basic Example</a>
 
-### Scrollable Sticky Element
+#### Scrollable Sticky Element
 
 Sticky sidebar smart enough to handle sidebar when it's taller than viewport. You don't have to worry about content, it will scroll sidebar independently up and down.
 
@@ -252,10 +251,6 @@ var sidebar = new StickySidebar('.sidebar', {minWidth: 300});
 
 Sticky sidebar jQuery plugin has various of events are trigger when changing affix state.
 
-`initialize.sticky` — The event fires immediately before the sticky sidebar plugin has been initialized.
-
-`initialized.sticky` — The event fires immediately after sticky sidebar plugin has been initialized.
-
 `affix-top.sticky` — The event fires immdiately before the element has been affixed top of viewport.
 
 `affixed-top.sticky` — The event fires immdiately after the element has been affixed top of viewport.
@@ -282,7 +277,7 @@ For example if you want to detect when element sticks top and bottom we might do
 
 {% highlight javascript %}
 
-var sidebar = document.querySelector('.sidebar');
+var sidebar = document.getElementById('sidebar');
 
 var stickySidebar = new StickySidebar(sidebar);
 
