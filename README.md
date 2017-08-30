@@ -62,12 +62,12 @@ For the above example, you can use the following JavaScript:
 <script type="text/javascript" src="./js/sticky-sidebar.js"></script>
 
 <script type="text/javascript">
-    var sidebar = stickySidebar('.sidebar', {
-        topSpacing: 20,
-        bottomSpacing: 20,
-        containerSelector: '.main-content',
-        innerWrapperSelector: '.sidebar__inner'
-    });
+  var sidebar = stickySidebar('.sidebar', {
+    topSpacing: 20,
+    bottomSpacing: 20,
+    containerSelector: '.main-content',
+    innerWrapperSelector: '.sidebar__inner'
+  });
 </script>
 ````
 
@@ -77,7 +77,7 @@ You can configure sticky sidebar as a jQuery plugin, just include ``jquery.stick
 
 ````html
 <script type="text/javascript" src="./js/jquery.js"></script>
-<script type="text/javascript" src="./js/sticky-sidebar.js"></script>
+<script type="text/javascript" src="./js/jquery.sticky-sidebar.js"></script>
 
 <script type="text/javascript">
   $('#sidebar').stickySidebar({
