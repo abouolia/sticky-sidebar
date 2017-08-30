@@ -31,7 +31,7 @@
 			border: 1px dotted green;
 			padding: 18px;
 			margin-left: 215px;
-			min-height: 600px;
+			min-height: 800px;
 			color: darkgrey;
 		}
 
@@ -60,7 +60,7 @@
 			text-align: center;
 			color: #8e8d8d;
 			line-height: 150px;
-			line-height: 85vh;
+			line-height: 95vh;
 			background: rgba(0, 0, 0, 0.02);
 		}
 
@@ -106,16 +106,14 @@
 		<p>Very Tall Footer</p>
 	</footer>
 
-	<script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript" src="../js/sticky-sidebar.js"></script>
 	<script type="text/javascript">
-		$(document).ready(function(){
-			$('#sidebar').stickySidebar({
-				containerSelector: '.container',
-				innerWrapperSelector: '.sidebar__inner',
-				topSpacing: 15,
-				bottomSpacing: 15
-			});
+	
+		var stickySidebar = new StickySidebar('#sidebar', {
+			containerSelector: '.container',
+			innerWrapperSelector: '.sidebar__inner',
+			topSpacing: 15,
+			bottomSpacing: 15
 		});
 	</script>
 

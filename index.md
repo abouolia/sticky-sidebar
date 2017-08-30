@@ -2,12 +2,12 @@
 layout: default
 ---
 
-[Sticky Sidebar](http://github.com/abouolia/sticky-sidebar) is pure JavaScript plugin for making intelligent and high performance sticky sidebar, works with sidebar if it's taller or shorter than viewport, has resize sensor to re-calculate the dimensions automatically when size of sidebar or its container is changed, supports jQuery/Zepto and compatible with Firefox, Chrome, Safari, and IE9+. Source can be found on [Github](http://github.com/abouolia/sticky-sidebar).
+[Sticky Sidebar ⬆⬇](http://github.com/abouolia/sticky-sidebar) is pure JavaScript plugin for making intelligent and high performance sticky sidebar, works with sidebar if it's taller or shorter than viewport, has resize sensor to re-calculate the dimensions automatically when size of sidebar or its container is changed, supports jQuery/Zepto and compatible with Firefox, Chrome, Safari, and IE9+. Source can be found on [Github](http://github.com/abouolia/sticky-sidebar).
 
 <iframe src="https://ghbtns.com/github-btn.html?user=abouolia&amp;repo=sticky-sidebar&amp;type=watch&amp;count=true&amp;size=large"
   allowtransparency="true" frameborder="0" scrolling="0" width="170" height="30"></iframe>
 
-![alt text](http://localhost/test.png "Logo Title Text 1")
+![Sticky Sidebar](http://localhost/test.png "Sticky Sidebar")
 
 0. [Why sticky sidebar is awesome?](#why-sticky-sidebar-is-awesome)
 1. [Examples](#example)
@@ -21,13 +21,13 @@ layout: default
 9. [jQuery/Zepto No Conflict](#)
 
 
-## Why sticky sidebar is awesome?
+## Why sticky sidebar is awesome? 😎
 * It does not re-calculate all dimensions when scrolling, just neccessary dimensions.
 * Super smooth without incurring scroll lag or jank and no page reflows.
 * Has resize sensor to re-calculate all dimenstions of the plugin when size of sidebar and its container is changed.
 * It has event trigger on each affix type to hook your code under particular situation.
 * Handle the sidebar when is tall or too short compared to the rest of the container.
-* It is super simple to setup.
+* Zero dependencies and super simple to setup.
 
 ## Examples
 
