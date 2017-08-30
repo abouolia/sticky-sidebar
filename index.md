@@ -137,6 +137,19 @@ For the above example, you can use the following JavaScript:
 </script>
 {% endhighlight html %}
 
+#### Usage with jQuery/Zepto
+
+You can configure sticky sidebar as a jQuery plugin, just include ``jquery.sticky-sidebar.js`` instead ``sticky-sidebar.js`` file than configure it as any jQuery plugin.
+
+{% highlight html %}
+$('#sidebar').stickySidebar({
+    topSpacing: 60,
+    bottomSpacing: 60
+})
+{% endhighlight html %}
+
+Make sure to include ``jquery.sticky-sidebar.js`` script file after ``jquery.js``.
+
 --------------------------
 
 ## Configure Your CSS
