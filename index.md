@@ -251,27 +251,25 @@ var sidebar = new StickySidebar('.sidebar', {minWidth: 300});
 
 Sticky sidebar jQuery plugin has various of events are trigger when changing affix state.
 
-`affix-top.sticky` — The event fires immdiately before the element has been affixed top of viewport.
+`affix.top.stickySidebar` — The event fires immdiately before the element has been affixed top of viewport.
 
-`affixed-top.sticky` — The event fires immdiately after the element has been affixed top of viewport.
+`affixed.top.stickySidebar` — The event fires immdiately after the element has been affixed top of viewport.
 
-`affix-bottom.sticky` — The event fires immdiately before the element has been affixed bottom of viewport.
+`affix.bottom.stickySidebar` — The event fires immdiately before the element has been affixed bottom of viewport.
 
-`affixed-bottom.sticky` — The event fires immdiately after the element has been affixed bottom of viewport.
+`affixed.bottom.stickySidebar` — The event fires immdiately after the element has been affixed bottom of viewport.
 
-`affix.container-bottom.sticky` — The event fires immdiately before the element has been affixed bottom of container.
+`affix.container-bottom.stickySidebar` — The event fires immdiately before the element has been affixed bottom of container.
 
-`affixed.container-bottom.sticky` — The event fires immdiately after the element has been affixed bottom of container.
+`affixed.container-bottom.stickySidebar` — The event fires immdiately after the element has been affixed bottom of container.
 
-`affix.unbottom.sticky` — This event fires immdiately before the element is no longer bottomed out.
+`affix.unbottom.stickySidebar` — This event fires immdiately before the element is no longer bottomed out.
 
-`affixed.unbottom.sticky` — This event fires immdiately after the element is no longer bottomed out.
+`affixed.unbottom.stickySidebar` — This event fires immdiately after the element is no longer bottomed out.
 
-`affix.static.sticky` — The event fires immdiately before the element has been returned to its position.
+`affix.static.stickySidebar` — The event fires immdiately before the element has been returned to its position.
 
-`affixed.static.sticky` — The event fires immdiately after the element has been returned to its position.
-
-`update.sticky` — Trigger this event will cause force to re-calculate all cached dimentions of sticky sidebar plugin.
+`affixed.static.stickySidebar` — The event fires immdiately after the element has been returned to its position.
 
 For example if you want to detect when element sticks top and bottom we might do:
 
@@ -281,16 +279,13 @@ var sidebar = document.getElementById('sidebar');
 
 var stickySidebar = new StickySidebar(sidebar);
 
-sidebar.addEventListener('affix-top.sticky', function(){
+sidebar.addEventListener('affix.top.stickySidebar', function(){
     console.log('Sidebar has stuck top of viewport.');
 });
 
-sidebar.addEventListener('affix-bottom.sticky', function(event){
+sidebar.addEventListener('affix.bottom.stickySidebar', function(event){
     console.log('Sidebar has stuck bottom of viewport.');
 });
-
-// Force to re-calculate all cached dimentions.
-stickySidebar.updateSticky();
 {% endhighlight javascript %}
 
 ------------------------------------
@@ -336,7 +331,7 @@ $.fn.stickySidebar = stickySidebar; // Give $().stickySidebar functionality.
 
 ## Author
 
-Ahmed Bouhuolia [GitHub](http://github.com/abouolia)/[Facebook](https://facebook.com/ahmed.abouhuolia)).
+Ahmed Bouhuolia [GitHub](http://github.com/abouolia)/[Facebook](https://facebook.com/Ahmed.bouhuolia))/[Twitter](https://twitter/ahmed_bouhu).
 
 ### License
 
