@@ -62,7 +62,7 @@ For the above example, you can use the following JavaScript:
 <script type="text/javascript" src="./js/sticky-sidebar.js"></script>
 
 <script type="text/javascript">
-  var sidebar = stickySidebar('.sidebar', {
+  var sidebar = new StickySidebar('.sidebar', {
     topSpacing: 20,
     bottomSpacing: 20,
     containerSelector: '.main-content',
