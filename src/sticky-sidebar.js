@@ -100,7 +100,7 @@ const StickySidebar = (() => {
       }
 
       // Current Affix Type of sidebar element.
-      this.affixedType = 'static';
+      this.affixedType = 'STATIC';
       this.direction = 'down';
       this.support = {
         transform:   false,
@@ -419,7 +419,7 @@ const StickySidebar = (() => {
         let affixEvent = 'affix.' + affixType.toLowerCase().replace('viewport-', '') + EVENT_KEY;
         StickySidebar.eventTrigger(this.sidebar, affixEvent);
 
-        if( 'static' === affixType )
+        if( 'STATIC' === affixType )
           this.sidebar.classList.remove(this.options.stickyClass);
         else
           this.sidebar.classList.add(this.options.stickyClass);
@@ -563,7 +563,9 @@ const StickySidebar = (() => {
      * @param {DOMElement} element - 
      */
     _appendResizeSensor(element){
-      element.style.position = 'relative';
+
+      if( 'static' === element.style.position )
+        element.style.position = 'relative';
 
       var wrapper = document.createElement('object');
       var style = 'display: block; position: absolute; top: 0; left: 0; height: 100%; width: 100%;' + 
