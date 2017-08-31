@@ -24,9 +24,7 @@ gulp.task("default", ['babel', 'concat', 'uglify']);
 
 gulp.task("babel", function(){
   return gulp.src("src/*.js")
-    .pipe(sourcemaps.init())
     .pipe(babel())
-    .pipe(sourcemaps.write("."))
     .pipe(gulp.dest("dist"));
 });
 
@@ -46,7 +44,7 @@ gulp.task('bundle', ['concat'], function(){
       format: 'iife',
       moduleName: 'stickySidebarModule'
     }))
-    .pipe(sourcemaps.write())
+    .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('./dist'));
 });
 
