@@ -416,7 +416,7 @@ const StickySidebar = (() => {
       var style = this._getStyle(affixType);
       
       if( (this.affixedType != affixType || force) && affixType ){
-        let affixEvent = 'affix.' + affixType.replace('viewport-', '') + EVENT_KEY;
+        let affixEvent = 'affix.' + affixType.toLowerCase().replace('viewport-', '') + EVENT_KEY;
         StickySidebar.eventTrigger(this.sidebar, affixEvent);
 
         if( 'static' === affixType )
@@ -434,7 +434,7 @@ const StickySidebar = (() => {
           this.sidebarInner.style[key] = style.inner[key] + _unit;
         }
 
-        let affixedEvent = 'affixed.'+ affixType.replace('viewport', '') + EVENT_KEY;
+        let affixedEvent = 'affixed.'+ affixType.toLowerCase().replace('viewport', '') + EVENT_KEY;
         StickySidebar.eventTrigger(this.sidebar, affixedEvent);
       } else {
         if( this._initialized ) this.sidebarInner.style.left = style.inner.left;
