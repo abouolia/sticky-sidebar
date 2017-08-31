@@ -1,4 +1,4 @@
-var stickySidebarModule = (function () {
+(function () {
 'use strict';
 
 /*
@@ -836,8 +836,51 @@ var StickySidebar = function () {
 // -------------------------
 window.StickySidebar = StickySidebar;
 
-return StickySidebar;
+(function () {
+  if ('undefined' === typeof widow) return;
+
+  var plugin = window.$ || window.jQuery || window.Zepto;
+  var DATA_NAMESPACE = 'stickySidebar';
+
+  // Make sure the site has jquery or zepto plugin.
+  if (plugin) {
+    /**
+     * Sticky Sidebar Plugin Defintion.
+     * @param {Object|String} - config
+     */
+    var jQueryPlugin = function (config) {
+      return this.each(function () {
+        var $this = plugin(this),
+            data = plugin(this).data(DATA_NAMESPACE);
+
+        if (!data) {
+          data = new StickySidebar(this, typeof config == 'object' && config);
+          $this.data(DATA_NAMESPACE, data);
+        }
+
+        if ('string' === typeof config) {
+          if (data[config] === undefined && ['destroy', 'updateSticky'].indexOf(config) === -1) throw new Error('No method named "' + config + '"');
+
+          data[config]();
+        }
+      });
+    };
+
+    plugin.fn.stickySidebar = _jQueryPlugin;
+    plugin.fn.stickySidebar.Constructor = StickySidebar;
+
+    var old = plugin.fn.stickySidebar;
+
+    /**
+     * Sticky Sidebar No Conflict.
+     */
+    plugin.fn.stickySidebar.noConflict = function () {
+      plugin.fn.stickySidebar = old;
+      return this;
+    };
+  }
+})();
 
 }());
 
-//# sourceMappingURL=sticky-sidebar.js.map
+//# sourceMappingURL=jquery.sticky-sidebar.js.map
