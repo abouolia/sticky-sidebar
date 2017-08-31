@@ -82,7 +82,7 @@ var sidebar = new stickySidebar('#sidebar', {topSpacing: 20});
 
 ## Installation
 
-You can install sticky sidebar jquery plugin from Bower, NPM or just simply download it from <a href="#">Github</a> than put ``sticky-sidebar.js`` file in your project folder.
+You can install sticky sidebar plugin from Bower, NPM or just simply download it from <a href="#">Github</a> than put ``sticky-sidebar.js`` file in your project folder.
 
 #### Bower 
 
@@ -249,7 +249,7 @@ var sidebar = new StickySidebar('.sidebar', {minWidth: 300});
 
 ## Events 
 
-Sticky sidebar jQuery plugin has various of events are trigger when changing affix state.
+Sticky sidebar plugin has various of events are trigger when changing affix state.
 
 `affix.top.stickySidebar` — The event fires immdiately before the element has been affixed top of viewport.
 
