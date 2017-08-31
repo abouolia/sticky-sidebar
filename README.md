@@ -8,7 +8,7 @@ Pure JavaScript plugin for making smart and high performance sticky sidebars.
 
 See for complete documents and examples [abouolia.github.com/sticky-sidebar](http://abouolia.github.com/sticky-sidebar)
 
-## Why sticky sidebar is awesome? 😎
+## Why sticky sidebar is awesome? 
 
 * It does not re-calculate all dimensions when scrolling, just neccessary dimensions.
 * Super smooth without incurring scroll lag or jank and no page reflows.
