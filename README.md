@@ -1,14 +1,21 @@
-# Sticky Sidebar
+# Sticky Sidebar 
 
-jQuery plugin for making smart and high performance sticky sidebars.
+Pure JavaScript plugin for making smart and high performance sticky sidebars.
 
 [Basic Example](https://abouolia.github.io/sticky-sidebar/examples/basic.html)
 
 [Scrollable Sticky Element](https://abouolia.github.io/sticky-sidebar/examples/scrollable-element.html)
 
-[Multiply Sticky Elements](https://abouolia.github.io/sticky-sidebar/examples/multiply-elements.html)
-
 See for complete documents and examples [abouolia.github.com/sticky-sidebar](http://abouolia.github.com/sticky-sidebar)
+
+## Why sticky sidebar is awesome? 😎
+
+* It does not re-calculate all dimensions when scrolling, just neccessary dimensions.
+* Super smooth without incurring scroll lag or jank and no page reflows.
+* Has resize sensor to re-calculate all dimenstions of the plugin when size of sidebar and its container is changed.
+* It has event trigger on each affix type to hook your code under particular situation.
+* Handle the sidebar when is tall or too short compared to the rest of the container.
+* Zero dependencies and super simple to setup.
 
 ## Install
 
@@ -52,39 +59,35 @@ Note that inner sidebar wrapper ``.sidebar__innner`` is optional but highly reco
 For the above example, you can use the following JavaScript:
 
 ````html
-<script type="text/javascript" src="./js/jquery.js"></script>
 <script type="text/javascript" src="./js/sticky-sidebar.js"></script>
 
 <script type="text/javascript">
-    $(document).ready(function(){
-        $(".sidebar").stickySidebar({
-            topSpacing: 20,
-            bottomSpacing: 20,
-            containerSelector: '.main-content',
-            innerWrapperSelector: '.sidebar__inner'
-        });	
-    });
+  var sidebar = stickySidebar('.sidebar', {
+    topSpacing: 20,
+    bottomSpacing: 20,
+    containerSelector: '.main-content',
+    innerWrapperSelector: '.sidebar__inner'
+  });
+</script>
+````
+
+#### Via jQuery/Zepto
+
+You can configure sticky sidebar as a jQuery plugin, just include ``jquery.sticky-sidebar.js`` instead ``sticky-sidebar.js`` file than configure it as any jQuery plugin.
+
+````html
+<script type="text/javascript" src="./js/jquery.js"></script>
+<script type="text/javascript" src="./js/jquery.sticky-sidebar.js"></script>
+
+<script type="text/javascript">
+  $('#sidebar').stickySidebar({
+    topSpacing: 60,
+    bottomSpacing: 60
+  });
 </script>
 ````
 
 Make sure to include ``sticky-sidebar.js`` script file after ``jquery.js``.
-
-#### Via data attributes
-
-To easily configure sticky sidebar to any element on the document using attributes, just add ``data-sticky-sidebar`` attribute with no value to element that you want to make it sticky. You can also configure its options, for example ``topSpacing`` option add it as attribute on element like that ``data-top-spacing="50"``
-
-Either by configure container of sticky element by adding ``data-sticky-sidebar-container`` attribute to container of sticky element. Below code will give you 
-
-````html
-<div class="container" data-sticky-sidebar-container>
-    <div class="sidebar" data-sticky-sidebar data-top-spacing="50">
-    	<!-- Content Goes Here -->
-    </div>
-    <div class="content">
-    	<!-- Content Goes Here -->
-    </div>
-</div>	
-````
 
 ## Broswers Support
 
