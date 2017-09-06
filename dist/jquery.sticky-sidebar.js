@@ -837,7 +837,7 @@ var StickySidebar = function () {
 window.StickySidebar = StickySidebar;
 
 (function () {
-  if ('undefined' === typeof widow) return;
+  if ('undefined' === typeof window) return;
 
   var plugin = window.$ || window.jQuery || window.Zepto;
   var DATA_NAMESPACE = 'stickySidebar';
@@ -848,7 +848,7 @@ window.StickySidebar = StickySidebar;
      * Sticky Sidebar Plugin Defintion.
      * @param {Object|String} - config
      */
-    var jQueryPlugin = function (config) {
+    var _jQueryPlugin = function (config) {
       return this.each(function () {
         var $this = plugin(this),
             data = plugin(this).data(DATA_NAMESPACE);
