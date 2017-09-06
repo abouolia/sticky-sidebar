@@ -1,7 +1,7 @@
 import StickySidebar from './sticky-sidebar';
 
 (() => {
-	if( 'undefined' === typeof widow ) return;
+	if( 'undefined' === typeof window ) return;
 
 	const plugin = window.$ || window.jQuery || window.Zepto;
 	const DATA_NAMESPACE = 'stickySidebar';
