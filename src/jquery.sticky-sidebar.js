@@ -12,7 +12,7 @@ import StickySidebar from './sticky-sidebar';
      * Sticky Sidebar Plugin Defintion.
      * @param {Object|String} - config
      */
-    function jQueryPlugin(config){
+    function _jQueryPlugin(config){
       return this.each(function(){
         var $this = plugin(this),
           data = plugin(this).data(DATA_NAMESPACE);
