@@ -1,11 +1,25 @@
 {
   "name": "sticky-sidebar",
   "description": "A JavaScript plugin for making smart and high performance.",
-  "version": "2.0.1",
+  "version": "2.2.0",
   "author": "Ahmed Bouhuolia",
   "email": "a.bouhuolia@gmail.com",
   "license": "The MIT License (MIT)",
   "homepage": "https://github.com/abouolia/sticky-sidebar",
+  "main": "./dist/sticky-sidebar.js",
+  "module": "./src/sticky-sidebar.js",
+  "keywords": ["sticky", "affix", "fixed", "sidebar", "javascript", "jquery"],
+  "files": ["dist", "src"],
+  "bugs": {
+    "url": "https://github.com/abouolia/sticky-sidebar/issues"
+  },
+  "scripts": {
+    "build": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/abouolia/sticky-sidebar.git"
+  },
   "devDependencies": {
     "babel": "^6.23.0",
     "babel-plugin-check-es2015-constants": "^6.22.0",
