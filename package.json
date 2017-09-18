@@ -6,7 +6,6 @@
   "email": "a.bouhuolia@gmail.com",
   "license": "The MIT License (MIT)",
   "homepage": "https://github.com/abouolia/sticky-sidebar",
-  "main": "./src/sticky-sidebar.js",
   "devDependencies": {
     "babel": "^6.23.0",
     "babel-plugin-check-es2015-constants": "^6.22.0",
