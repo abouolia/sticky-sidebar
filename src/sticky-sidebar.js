@@ -146,7 +146,7 @@ const StickySidebar = (() => {
       if( this.options.innerWrapperSelector ){
         this.sidebarInner = this.sidebar.querySelector(this.options.innerWrapperSelector);
 
-        if( null !== this.sidebarInner )
+        if( null === this.sidebarInner )
           this.sidebarInner = false;
       }
       
