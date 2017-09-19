@@ -204,7 +204,7 @@ var StickySidebar = function () {
         if (this.options.innerWrapperSelector) {
           this.sidebarInner = this.sidebar.querySelector(this.options.innerWrapperSelector);
 
-          if (null !== this.sidebarInner) this.sidebarInner = false;
+          if (null === this.sidebarInner) this.sidebarInner = false;
         }
 
         if (!this.sidebarInner) {
