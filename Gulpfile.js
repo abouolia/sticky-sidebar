@@ -40,9 +40,9 @@ gulp.task('bundle', ['concat'], function(){
     // transform the files here.
     .pipe(rollup({
       // any option supported by Rollup can be set here.
-      entry: ['./dist/sticky-sidebar.js', './dist/jquery.sticky-sidebar.js'],
+      input: ['./dist/sticky-sidebar.js', './dist/jquery.sticky-sidebar.js'],
       format: 'iife',
-      moduleName: 'stickySidebarModule'
+      name: 'StickySidebar'
     }))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('./dist'));
