@@ -85,20 +85,6 @@ const StickySidebar = (() => {
       this.sidebarInner = false;
       this.container = this.sidebar.parentElement;
 
-      // Container wrapper of the sidebar.
-      if( this.options.containerSelector ){
-        let containers = document.querySelectorAll(this.options.containerSelector);
-        containers = Array.prototype.slice.call(containers);
-
-        containers.forEach((container, item) => {
-          if( ! container.contains(this.sidebar) ) return;
-          this.container = container;
-        });
-
-        if( ! containers.length )
-          throw new Error("The container does not contains on the sidebar.");
-      }
-
       // Current Affix Type of sidebar element.
       this.affixedType = 'STATIC';
       this.direction = 'down';
@@ -161,9 +147,19 @@ const StickySidebar = (() => {
         this.sidebarInner = this.sidebar.querySelector('.inner-wrapper-sticky');
       }
 
-      // If there's no specific container, user parent of sidebar as container.
-      if( null !== this.container )
-        this.container = this.sidebar.parentElement;
+      // Container wrapper of the sidebar.
+      if( this.options.containerSelector ){
+        let containers = document.querySelectorAll(this.options.containerSelector);
+        containers = Array.prototype.slice.call(containers);
+
+        containers.forEach((container, item) => {
+          if( ! container.contains(this.sidebar) ) return;
+          this.container = container;
+        });
+
+        if( ! containers.length )
+          throw new Error("The container does not contains on the sidebar.");
+      }
       
       // If top/bottom spacing is not function parse value to integer.
       if( 'function' !== typeof this.options.topSpacing )
