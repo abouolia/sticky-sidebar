@@ -614,7 +614,7 @@ const StickySidebar = (() => {
       this.sidebar.classList.remove(this.options.stickyClass);
       this.sidebar.style.minHeight = '';
 
-      this.removeEventListener('update' + EVENT_KEY, this.updateSticky);
+      this.sidebar.removeEventListener('update' + EVENT_KEY, this.updateSticky);
 
       var styleReset = {position: '', top: '', left: '', bottom: '', width: '',  transform: ''};
       for( let key in styleReset )
