@@ -1,6 +1,6 @@
 /**
  * Sticky Sidebar JavaScript Plugin.
- * @version 2.3.0
+ * @version 3.2.0
  * @author Ahmed Bouhuolia <a.bouhuolia@gmail.com>
  * @license The MIT License (MIT)
  */
@@ -11,7 +11,7 @@ const StickySidebar = (() => {
     // ---------------------------------
     //
     const EVENT_KEY = '.stickySidebar';
-    const VERSION   = '2.0';
+    const VERSION   = '3.2.0';
   
     const DEFAULTS = {
       
