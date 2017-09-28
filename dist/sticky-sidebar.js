@@ -1,47 +1,8 @@
-var stickySidebarModule = (function () {
-'use strict';
-
-/*
- * raf.js
- * https://github.com/ngryman/raf.js
- *
- * original requestAnimationFrame polyfill by Erik Möller
- * inspired from paul_irish gist and post
- *
- * Copyright (c) 2013 ngryman
- * Licensed under the MIT license.
- */
-
-(function(window) {
-	var lastTime = 0,
-		vendors = ['webkit', 'moz'],
-		requestAnimationFrame = window.requestAnimationFrame,
-		cancelAnimationFrame = window.cancelAnimationFrame,
-		i = vendors.length;
-
-	// try to un-prefix existing raf
-	while (--i >= 0 && !requestAnimationFrame) {
-		requestAnimationFrame = window[vendors[i] + 'RequestAnimationFrame'];
-		cancelAnimationFrame = window[vendors[i] + 'CancelAnimationFrame'];
-	}
-
-	// polyfill with setTimeout fallback
-	// heavily inspired from @darius gist mod: https://gist.github.com/paulirish/1579671#comment-837945
-	if (!requestAnimationFrame || !cancelAnimationFrame) {
-		requestAnimationFrame = function(callback) {
-			var now = +new Date(), nextTime = Math.max(lastTime + 16, now);
-			return setTimeout(function() {
-				callback(lastTime = nextTime);
-			}, nextTime - now);
-		};
-
-		cancelAnimationFrame = clearTimeout;
-	}
-
-	// export to window
-	window.requestAnimationFrame = requestAnimationFrame;
-	window.cancelAnimationFrame = cancelAnimationFrame;
-}(window));
+(function (global, factory) {
+	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+	typeof define === 'function' && define.amd ? define(factory) :
+	(global.StickySidebar = factory());
+}(this, (function () { 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -60,8 +21,6 @@ var StickySidebar = function () {
   // ---------------------------------
   //
   var EVENT_KEY = '.stickySidebar';
-  var VERSION = '2.0';
-
   var DEFAULTS = {
 
     /**
@@ -140,19 +99,6 @@ var StickySidebar = function () {
       this.sidebarInner = false;
       this.container = this.sidebar.parentElement;
 
-      // Container wrapper of the sidebar.
-      if (this.options.containerSelector) {
-        var containers = document.querySelectorAll(this.options.containerSelector);
-        containers = Array.prototype.slice.call(containers);
-
-        containers.forEach(function (container, item) {
-          if (!container.contains(_this.sidebar)) return;
-          _this.container = container;
-        });
-
-        if (!containers.length) throw new Error("The container does not contains on the sidebar.");
-      }
-
       // Current Affix Type of sidebar element.
       this.affixedType = 'STATIC';
       this.direction = 'down';
@@ -180,7 +126,7 @@ var StickySidebar = function () {
       };
 
       // Bind event handlers for referencability.
-      ['_resizeListener'].forEach(function (method) {
+      ['handleEvent'].forEach(function (method) {
         _this[method] = _this[method].bind(_this);
       });
 
@@ -198,6 +144,8 @@ var StickySidebar = function () {
     _createClass(StickySidebar, [{
       key: 'initialize',
       value: function initialize() {
+        var _this2 = this;
+
         this._setSupportFeatures();
 
         // Get sticky sidebar inner wrapper, if not found, will create one.
@@ -217,8 +165,18 @@ var StickySidebar = function () {
           }this.sidebarInner = this.sidebar.querySelector('.inner-wrapper-sticky');
         }
 
-        // If there's no specific container, user parent of sidebar as container.
-        if (null !== this.container) this.container = this.sidebar.parentElement;
+        // Container wrapper of the sidebar.
+        if (this.options.containerSelector) {
+          var containers = document.querySelectorAll(this.options.containerSelector);
+          containers = Array.prototype.slice.call(containers);
+
+          containers.forEach(function (container, item) {
+            if (!container.contains(_this2.sidebar)) return;
+            _this2.container = container;
+          });
+
+          if (!containers.length) throw new Error("The container does not contains on the sidebar.");
+        }
 
         // If top/bottom spacing is not function parse value to integer.
         if ('function' !== typeof this.options.topSpacing) this.options.topSpacing = parseInt(this.options.topSpacing) || 0;
@@ -254,9 +212,9 @@ var StickySidebar = function () {
 
         this.sidebar.addEventListener('update' + EVENT_KEY, this);
 
-        if (this.options.resizeSensor) {
-          this.addResizerListener(this.sidebarInner, this);
-          this.addResizerListener(this.container, this);
+        if (this.options.resizeSensor && 'undefined' !== typeof ResizeSensor) {
+          new ResizeSensor(this.sidebarInner, this.handleEvent);
+          new ResizeSensor(this.container, this.handleEvent);
         }
       }
 
@@ -479,9 +437,6 @@ var StickySidebar = function () {
 
         force = force || false;
 
-        var offsetTop = this.options.topSpacing;
-        var offsetBottom = this.options.bottomSpacing;
-
         var affixType = this.getAffixType();
         var style = this._getStyle(affixType);
 
@@ -492,7 +447,6 @@ var StickySidebar = function () {
           if ('STATIC' === affixType) this.sidebar.classList.remove(this.options.stickyClass);else this.sidebar.classList.add(this.options.stickyClass);
 
           for (var key in style.outer) {
-            var _unit = 'number' === typeof style.outer[key] ? 'px' : '';
             this.sidebar.style[key] = style.outer[key];
           }
 
@@ -540,7 +494,7 @@ var StickySidebar = function () {
     }, {
       key: 'updateSticky',
       value: function updateSticky() {
-        var _this2 = this;
+        var _this3 = this;
 
         var event = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
@@ -553,21 +507,21 @@ var StickySidebar = function () {
               // When browser is scrolling and re-calculate just dimensions
               // within scroll. 
               case 'scroll':
-                _this2._calcDimensionsWithScroll();
-                _this2.observeScrollDir();
-                _this2.stickyPosition();
+                _this3._calcDimensionsWithScroll();
+                _this3.observeScrollDir();
+                _this3.stickyPosition();
                 break;
 
               // When browser is resizing or there's no event, observe width
               // breakpoint and re-calculate dimensions.
               case 'resize':
               default:
-                _this2._widthBreakpoint();
-                _this2.calcDimensions();
-                _this2.stickyPosition('resize' === eventType || false);
+                _this3._widthBreakpoint();
+                _this3.calcDimensions();
+                _this3.stickyPosition(true);
                 break;
             }
-            _this2._running = false;
+            _this3._running = false;
           });
         })(event.type);
       }
@@ -606,106 +560,6 @@ var StickySidebar = function () {
       }
 
       /**
-       * Add resize sensor listener to specifc element.
-       * @public
-       * @param {DOMElement} element - 
-       * @param {Function} callback - 
-       */
-
-    }, {
-      key: 'addResizerListener',
-      value: function addResizerListener(element, callback) {
-        if (!element.resizeListeners) {
-          element.resizeListeners = [];
-          this._appendResizeSensor(element);
-        }
-
-        element.resizeListeners.push(callback);
-      }
-
-      /**
-       * Remove resize sonser listener from specific element.
-       * @function
-       * @public
-       * @param {DOMElement} element - 
-       * @param {Function} callback - 
-       */
-
-    }, {
-      key: 'removeResizeListener',
-      value: function removeResizeListener(element, callback) {
-        var resizeListeners = element.resizeListeners;
-        var index = resizeListeners.indexOf(callback);
-
-        this._resizeListeners.splice(index, 1);
-
-        if (null !== element.resizeListeners) {
-          var resizeTrigger = element.resizeTrigger;
-          var _window = resizeTrigger.contentDocument.defaultView;
-
-          _window.removeEventListener('resize', this._resizeListener);
-          resizeTrigger = resizeTrigger.remove();
-        }
-      }
-
-      /**
-       * Append resize sensor object on DOM in specific element.
-       * @private
-       * @param {DOMElement} element - 
-       */
-
-    }, {
-      key: '_appendResizeSensor',
-      value: function _appendResizeSensor(element) {
-        var _this3 = this;
-
-        if ('static' === element.style.position) element.style.position = 'relative';
-
-        var wrapper = document.createElement('object');
-        var style = 'display: block; position: absolute; top: 0; left: 0; height: 100%; width: 100%;' + 'overflow: hidden; pointer-events: none; z-index: -1;';
-
-        wrapper.setAttribute('style', style);
-        wrapper.resizeElement = element;
-
-        wrapper.addEventListener('load', function (event) {
-          var target = event.currentTarget;
-
-          target.contentDocument.defaultView.resizeTrigger = target.resizeElement;
-          target.contentDocument.defaultView.addEventListener('resize', _this3._resizeListener);
-        });
-
-        wrapper.type = 'text/html';
-
-        if (StickySidebar.isIE()) wrapper.data = 'about:blank';
-
-        element.resizeTrigger = wrapper;
-        element.appendChild(wrapper);
-      }
-
-      /**
-       * Resize sensor listener to call callbacks of trigger.
-       * @private 
-       * @param {Object} event - Event object passed from listener.
-       */
-
-    }, {
-      key: '_resizeListener',
-      value: function _resizeListener(event) {
-        var _this4 = this;
-
-        var _window = event.target || event.srcElement;
-        var trigger = _window.resizeTrigger;
-
-        trigger.resizeListeners.forEach(function (callback) {
-          if ('object' === typeof callback) {
-            callback = callback.handleEvent;
-            trigger = _this4;
-          }
-          callback.call(trigger, event);
-        });
-      }
-
-      /**
        * Destroy sticky sidebar plugin.
        * @public
        */
@@ -713,33 +567,27 @@ var StickySidebar = function () {
     }, {
       key: 'destroy',
       value: function destroy() {
-        window.removeEventListener('resize', this._onResize);
-        window.removeEventListener('scroll', this._onScroll);
+        window.removeEventListener('resize', this);
+        window.removeEventListener('scroll', this);
 
         this.sidebar.classList.remove(this.options.stickyClass);
         this.sidebar.style.minHeight = '';
 
-        this.removeEventListener('update' + EVENT_KEY, this.updateSticky);
+        this.sidebar.removeEventListener('update' + EVENT_KEY, this);
 
-        var styleReset = { position: '', top: '', left: '', bottom: '', width: '', transform: '' };
-        for (var key in styleReset) {
-          this.sidebar.style[key] = styleReset[key];
-        }if (this.options.resizeSensor) {
-          this.removeResizeListener(this.sidebarInner, this.updateSticky);
-          this.removeResizeListener(this.container, this.updateSticky);
+        var styleReset = { inner: {}, outer: {} };
+
+        styleReset.inner = { position: '', top: '', left: '', bottom: '', width: '', transform: '' };
+        styleReset.outer = { height: '', position: '' };
+
+        for (var key in styleReset.outer) {
+          this.sidebar.style[key] = styleReset.outer[key];
+        }for (var _key2 in styleReset.inner) {
+          this.sidebarInner.style[_key2] = styleReset.inner[_key2];
+        }if (this.options.resizeSensor && 'undefined' !== typeof ResizeSensor) {
+          ResizeSensor.detach(this.sidebarInner, this.handleEvent);
+          ResizeSensor.detach(this.container, this.handleEvent);
         }
-      }
-
-      /**
-       * Detarmine if the browser is Internet Explorer.
-       * @function
-       * @static
-       */
-
-    }], [{
-      key: 'isIE',
-      value: function isIE() {
-        return Boolean(navigator.userAgent.match(/Trident/));
       }
 
       /**
@@ -750,7 +598,7 @@ var StickySidebar = function () {
        * @return {String}
        */
 
-    }, {
+    }], [{
       key: 'supportTransform',
       value: function supportTransform(transform3d) {
         var result = false,
@@ -780,9 +628,9 @@ var StickySidebar = function () {
     }, {
       key: 'eventTrigger',
       value: function eventTrigger(element, eventName, data) {
-        if (window.CustomEvent) {
+        try {
           var event = new CustomEvent(eventName, { detail: data });
-        } else {
+        } catch (e) {
           var event = document.createEvent('CustomEvent');
           event.initCustomEvent(eventName, true, true, data);
         }
@@ -838,6 +686,6 @@ window.StickySidebar = StickySidebar;
 
 return StickySidebar;
 
-}());
+})));
 
 //# sourceMappingURL=sticky-sidebar.js.map
