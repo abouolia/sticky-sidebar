@@ -373,7 +373,7 @@ const StickySidebar = (() => {
             if( translate )
               style.inner = {transform: translate};
             else 
-              style.inner = {position: 'absolute', top: dims.containerTop + dims.translateY};
+              style.inner = {position: 'absolute', top: dims.translateY, width: dims.sidebarWidth};
             break;
         }
         
@@ -467,7 +467,7 @@ const StickySidebar = (() => {
         this._running = true;
   
         ((eventType) => {
-
+          
           requestAnimationFrame(() => {
             switch( eventType ){
               // When browser is scrolling and re-calculate just dimensions
