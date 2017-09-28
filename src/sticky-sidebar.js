@@ -667,9 +667,9 @@ const StickySidebar = (() => {
      * @param {Object} data - 
      */
     static eventTrigger(element, eventName, data){
-      if (window.CustomEvent) {
+      try{
         var event = new CustomEvent(eventName, {detail: data});
-      } else {
+      } catch(e){
         var event = document.createEvent('CustomEvent');
         event.initCustomEvent(eventName, true, true, data);
       }
