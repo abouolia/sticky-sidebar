@@ -129,6 +129,8 @@
 		<p>Very Tall Footer</p>
 	</footer>
 
+	<script type="text/javascript" src="../js/rAF.js"></script>
+	<script type="text/javascript" src="../js/ResizeSensor.js"></script>
 	<script type="text/javascript" src="../js/sticky-sidebar.js"></script>
 	<script type="text/javascript">
 		var options = {
@@ -138,7 +140,9 @@
 			bottomSpacing: 15
 		};
 
-		var stickySidabar = new StickySidebar('#sidebar, #sidebar-2', options);
+		var sidebar1 = new StickySidebar('#sidebar', options);
+
+		var sidebar2 = new StickySidebar('#sidebar-2', options);
 	</script>
 
 </body>
