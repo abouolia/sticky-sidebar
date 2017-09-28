@@ -112,7 +112,7 @@ const StickySidebar = (() => {
       };
 
       // Bind event handlers for referencability.
-      ['_resizeListener'].forEach( (method) => {
+      ['handleEvent'].forEach( (method) => {
         this[method] = this[method].bind(this);
       });
 
@@ -194,9 +194,9 @@ const StickySidebar = (() => {
 
       this.sidebar.addEventListener('update' + EVENT_KEY, this);
 
-      if( this.options.resizeSensor ){
-        this.addResizerListener(this.sidebarInner, this);
-        this.addResizerListener(this.container, this);
+      if( this.options.resizeSensor && 'undefined' !== typeof ResizeSensor ){
+        new ResizeSensor(this.sidebarInner, this.handleEvent);
+        new ResizeSensor(this.container, this.handleEvent);
       }
     }
 
@@ -465,7 +465,7 @@ const StickySidebar = (() => {
     updateSticky(event = {}){
       if( this._running ) return;
       this._running = true;
-      
+
       ((eventType) => {
         requestAnimationFrame(() => {
           switch( eventType ){
@@ -483,7 +483,7 @@ const StickySidebar = (() => {
             default: 
               this._widthBreakpoint();
               this.calcDimensions();
-              this.stickyPosition('resize' === eventType || false);
+              this.stickyPosition(true);
               break;
           }
           this._running = false;
@@ -517,122 +517,33 @@ const StickySidebar = (() => {
     }
 
     /**
-     * Add resize sensor listener to specifc element.
-     * @public
-     * @param {DOMElement} element - 
-     * @param {Function} callback - 
-     */
-    addResizerListener(element, callback){
-      if( ! element.resizeListeners ){
-        element.resizeListeners = [];
-        this._appendResizeSensor(element);
-      }
-        
-      element.resizeListeners.push(callback);
-    }
-
-    /**
-     * Remove resize sonser listener from specific element.
-     * @function
-     * @public
-     * @param {DOMElement} element - 
-     * @param {Function} callback - 
-     */
-    removeResizeListener(element, callback){
-      var resizeListeners = element.resizeListeners;
-      var index = resizeListeners.indexOf(callback);
-
-      this._resizeListeners.splice(index, 1);
-
-      if( null !== element.resizeListeners){
-        var resizeTrigger = element.resizeTrigger;
-        var _window = resizeTrigger.contentDocument.defaultView;
-
-        _window.removeEventListener('resize', this._resizeListener);
-        resizeTrigger = resizeTrigger.remove();
-      }
-    }
-
-    /**
-     * Append resize sensor object on DOM in specific element.
-     * @private
-     * @param {DOMElement} element - 
-     */
-    _appendResizeSensor(element){
-
-      if( 'static' === element.style.position )
-        element.style.position = 'relative';
-
-      var wrapper = document.createElement('object');
-      var style = 'display: block; position: absolute; top: 0; left: 0; height: 100%; width: 100%;' + 
-          'overflow: hidden; pointer-events: none; z-index: -1;';
-
-      wrapper.setAttribute('style', style);
-      wrapper.resizeElement = element;
-
-      wrapper.addEventListener('load', (event) => {
-        let target = event.currentTarget;
-
-        target.contentDocument.defaultView.resizeTrigger = target.resizeElement;
-        target.contentDocument.defaultView.addEventListener('resize', this._resizeListener);
-      });
-
-      wrapper.type = 'text/html';
-
-      if( StickySidebar.isIE() ) wrapper.data = 'about:blank';
-      
-      element.resizeTrigger = wrapper;
-      element.appendChild(wrapper);
-    }
-
-    /**
-     * Resize sensor listener to call callbacks of trigger.
-     * @private 
-     * @param {Object} event - Event object passed from listener.
-     */
-    _resizeListener(event){
-      var _window = event.target || event.srcElement;
-      var trigger = _window.resizeTrigger;
-        
-      trigger.resizeListeners.forEach((callback) => {
-        if( 'object' === typeof callback ){
-            callback = callback.handleEvent;
-            trigger = this;
-        }
-        callback.call(trigger, event);
-      });
-    }
-
-    /**
      * Destroy sticky sidebar plugin.
      * @public
      */
     destroy(){
-      window.removeEventListener('resize', this._onResize);
-      window.removeEventListener('scroll', this._onScroll);
+      window.removeEventListener('resize', this);
+      window.removeEventListener('scroll', this);
 
       this.sidebar.classList.remove(this.options.stickyClass);
       this.sidebar.style.minHeight = '';
 
-      this.removeEventListener('update' + EVENT_KEY, this.updateSticky);
+      this.sidebar.removeEventListener('update' + EVENT_KEY, this);
 
-      var styleReset = {position: '', top: '', left: '', bottom: '', width: '',  transform: ''};
-      for( let key in styleReset )
-        this.sidebar.style[key] = styleReset[key];
+      var styleReset = {inner: {}, outer: {}};
 
-      if( this.options.resizeSensor ){
-        this.removeResizeListener(this.sidebarInner, this.updateSticky);
-        this.removeResizeListener(this.container, this.updateSticky);
+      styleReset.inner = {position: '', top: '', left: '', bottom: '', width: '',  transform: ''};
+      styleReset.outer = {height: '', position: ''};
+
+      for( let key in styleReset.outer )
+        this.sidebar.style[key] = styleReset.outer[key];
+
+      for( let key in styleReset.inner )
+        this.sidebarInner.style[key] = styleReset.inner[key];
+
+      if( this.options.resizeSensor && 'undefined' !== typeof ResizeSensor ){
+        ResizeSensor.detach(this.sidebarInner, this.handleEvent);
+        ResizeSensor.detach(this.container, this.handleEvent);
       }
-    }
-
-    /**
-     * Detarmine if the browser is Internet Explorer.
-     * @function
-     * @static
-     */
-    static isIE(){
-      return Boolean(navigator.userAgent.match(/Trident/));
     }
 
     /**
