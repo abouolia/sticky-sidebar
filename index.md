@@ -57,7 +57,7 @@ var sidebar = new StickySidebar('#sidebar', {topSpacing: 20});
 
 #### Scrollable Sticky Element
 
-Sticky sidebar smart enough to handle sidebar when it's taller than viewport. You don't have to worry about content, it will scroll sidebar independently up and down.
+Sticky sidebar smart enough to handle sidebar when it's taller than viewport. You don't have to worry about content, it will scroll the sidebar independently, up and down.
 
 {% highlight javascript %}
 var sidebar = new stickySidebar('#sidebar', {topSpacing: 20});
@@ -83,7 +83,7 @@ var sidebar = new stickySidebar('#sidebar', {topSpacing: 20});
 
 ## Installation
 
-You can install sticky sidebar plugin from Bower, NPM or just simply download it from <a href="#">Github</a> than put ``sticky-sidebar.js`` file in your project folder.
+You can install sticky sidebar plugin from Bower, NPM or just simply download it from <a href="#">GitHub</a> then put ``sticky-sidebar.js`` file in your project folder.
 
 #### Bower 
 
