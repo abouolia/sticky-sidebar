@@ -6,13 +6,13 @@ Pure JavaScript plugin for making smart and high performance sticky sidebars.
 
 [Scrollable Sticky Element](https://abouolia.github.io/sticky-sidebar/examples/scrollable-element.html)
 
-See for complete documents and examples [abouolia.github.com/sticky-sidebar](http://abouolia.github.com/sticky-sidebar)
+See for complete documentation and examples [abouolia.github.com/sticky-sidebar](http://abouolia.github.com/sticky-sidebar)
 
 ## Why sticky sidebar is awesome? 
 
 * It does not re-calculate all dimensions when scrolling, just neccessary dimensions.
 * Super smooth without incurring scroll lag or jank and no page reflows.
-* Has resize sensor to re-calculate all dimenstions when size of sidebar and its container is changed.
+* Integrated with resize sensor to re-calculate all dimenstions of the plugin when size of sidebar or its container is changed.
 * It has event trigger on each affix type to hook your code under particular situation.
 * Handle the sidebar when is tall or too short compared to the rest of the container.
 * Zero dependencies and super simple to setup.
@@ -89,9 +89,17 @@ You can configure sticky sidebar as a jQuery plugin, just include ``jquery.stick
 
 Make sure to include ``sticky-sidebar.js`` script file after ``jquery.js``.
 
+## Usage with [ResizeSensor.js](https://github.com/marcj/css-element-queries/blob/master/src/ResizeSensor.js)
+
+Sticky sidebar integrated with [ResizeSensor.js](https://github.com/marcj/css-element-queries/blob/master/src/ResizeSensor.js) to detect when sidebar or container is changed. To use resize sensor with this plugin just make sure to include ResizeSensor.js before `sticky-sidebar.js` code whether through module loader, bundle or event inclusion as a `<script>` and enable `resizeSensor` option (enabled by default) and it will works.
+
+You can choose not to include `ResizeSensor.js` and sticky sidebar will continue work without any problem but without automatically detect resize changes.
+
 ## Broswers Support
 
-Compatible with Firefox, Chrome, Safari, and IE9+. We looking forward to support IE8+.
+Sticky sidebar works in all modern browsers including Internet Explorer 9 and above, but if you want it to work with IE9, should include [`requestAnimationFrame`](https://gist.github.com/paulirish/1579671) polyfill before sticky sidebar code.
+
+If you have any issue with browser compatibility don’t hesitate to [Submit an issue](https://github.com/abouolia/sticky-sidebar/issues/new).
 
 ## License 
 
