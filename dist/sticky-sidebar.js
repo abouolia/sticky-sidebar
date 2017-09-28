@@ -10,7 +10,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 /**
  * Sticky Sidebar JavaScript Plugin.
- * @version 1.0.0
+ * @version 2.3.0
  * @author Ahmed Bouhuolia <a.bouhuolia@gmail.com>
  * @license The MIT License (MIT)
  */
@@ -402,7 +402,7 @@ var StickySidebar = function () {
           case 'VIEWPORT-UNBOTTOM':
             var translate = this._getTranslate(0, dims.translateY + 'px');
 
-            if (translate) style.inner = { transform: translate };else style.inner = { position: 'absolute', top: dims.containerTop + dims.translateY };
+            if (translate) style.inner = { transform: translate };else style.inner = { position: 'absolute', top: dims.translateY, width: dims.sidebarWidth };
             break;
         }
 
@@ -444,7 +444,7 @@ var StickySidebar = function () {
           var affixEvent = 'affix.' + affixType.toLowerCase().replace('viewport-', '') + EVENT_KEY;
           StickySidebar.eventTrigger(this.sidebar, affixEvent);
 
-          if ('STATIC' === affixType) this.sidebar.classList.remove(this.options.stickyClass);else this.sidebar.classList.add(this.options.stickyClass);
+          if ('STATIC' === affixType) StickySidebar.removeClass(this.sidebar, this.options.stickyClass);else StickySidebar.addClass(this.sidebar, this.options.stickyClass);
 
           for (var key in style.outer) {
             this.sidebar.style[key] = style.outer[key];
@@ -478,7 +478,7 @@ var StickySidebar = function () {
           this.affixedType = 'STATIC';
 
           this.sidebar.removeAttribute('style');
-          this.sidebar.classList.remove(this.options.stickyClass);
+          StickySidebar.removeClass(this.sidebar, this.options.stickyClass);
           this.sidebarInner.removeAttribute('style');
         } else {
           this._breakpoint = false;
@@ -502,6 +502,7 @@ var StickySidebar = function () {
         this._running = true;
 
         (function (eventType) {
+
           requestAnimationFrame(function () {
             switch (eventType) {
               // When browser is scrolling and re-calculate just dimensions
@@ -671,6 +672,49 @@ var StickySidebar = function () {
           if (!isNaN(offsetLeft)) result.left += offsetLeft;
         } while (element = element.offsetParent);
         return result;
+      }
+
+      /**
+       * Add specific class name to specific element.
+       * @static 
+       * @param {ObjectDOM} element 
+       * @param {String} className 
+       */
+
+    }, {
+      key: 'addClass',
+      value: function addClass(element, className) {
+        if (!StickySidebar.hasClass(element, className)) {
+          if (element.classList) element.classList.add(className);else element.className += ' ' + className;
+        }
+      }
+
+      /**
+       * Remove specific class name to specific element
+       * @static
+       * @param {ObjectDOM} element 
+       * @param {String} className 
+       */
+
+    }, {
+      key: 'removeClass',
+      value: function removeClass(element, className) {
+        if (StickySidebar.hasClass(element, className)) {
+          if (element.classList) element.classList.remove(className);else element.className = element.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
+        }
+      }
+
+      /**
+       * Detarmine weather the element has specific class name.
+       * @static
+       * @param {ObjectDOM} element 
+       * @param {String} className 
+       */
+
+    }, {
+      key: 'hasClass',
+      value: function hasClass(element, className) {
+        if (element.classList) return element.classList.contains(className);else return new RegExp('(^| )' + className + '( |$)', 'gi').test(element.className);
       }
     }]);
 
