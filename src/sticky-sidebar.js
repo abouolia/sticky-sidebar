@@ -1,6 +1,6 @@
 /**
  * Sticky Sidebar JavaScript Plugin.
- * @version 1.0.0
+ * @version 2.3.0
  * @author Ahmed Bouhuolia <a.bouhuolia@gmail.com>
  * @license The MIT License (MIT)
  */
@@ -467,7 +467,7 @@ const StickySidebar = (() => {
         this._running = true;
   
         ((eventType) => {
-          
+
           requestAnimationFrame(() => {
             switch( eventType ){
               // When browser is scrolling and re-calculate just dimensions
