@@ -2,7 +2,7 @@
 layout: default
 ---
 
-[Sticky Sidebar ⬆⬇](http://github.com/abouolia/sticky-sidebar) is pure JavaScript plugin for making intelligent and high performance sticky sidebar, works with sidebar if it's taller or shorter than viewport, has resize sensor to re-calculate the dimensions automatically when size of sidebar or its container is changed, supports jQuery/Zepto and compatible with Firefox, Chrome, Safari, and IE9+. Source can be found on [Github](http://github.com/abouolia/sticky-sidebar).
+[Sticky Sidebar ⬆⬇](http://github.com/abouolia/sticky-sidebar) is pure JavaScript plugin for making smart and high performance sticky sidebar, works with sidebar if it's taller or shorter than viewport, integrated with [resize sensor](https://github.com/marcj/css-element-queries/blob/master/src/ResizeSensor.js) to re-calculate the dimensions automatically when size of sidebar or its container is changed, supports jQuery/Zepto and compatible with Firefox, Chrome, Safari, and IE9+. Source can be found on [Github](http://github.com/abouolia/sticky-sidebar).
 
 <iframe src="https://ghbtns.com/github-btn.html?user=abouolia&amp;repo=sticky-sidebar&amp;type=watch&amp;count=true&amp;size=large"
   allowtransparency="true" frameborder="0" scrolling="0" width="170" height="30"></iframe>
@@ -18,12 +18,13 @@ layout: default
 6. [Events](#events)
 7. [Public Methods](#public-methods)
 8. [Scrolling Performance](#scrolling-performance)
-9. [jQuery/Zepto No Conflict](#jqueryzepto-no-conflict)
+9. [Browser Compatibility](#browser-compatibility)
+10. [jQuery/Zepto No Conflict](#jqueryzepto-no-conflict)
 
 ### Why sticky sidebar is awesome? 
 * It does not re-calculate all dimensions when scrolling, just neccessary dimensions.
 * Super smooth without incurring scroll lag or jank and no page reflows.
-* Has resize sensor to re-calculate all dimenstions of the plugin when size of sidebar and its container is changed.
+* Integrated with resize sensor to re-calculate all dimenstions of the plugin when size of sidebar and its container is changed.
 * It has event trigger on each affix type to hook your code under particular situation.
 * Handle the sidebar when is tall or too short compared to the rest of the container.
 * Zero dependencies and super simple to setup.
@@ -136,7 +137,7 @@ For the above example, you can use the following JavaScript:
 </script>
 {% endhighlight html %}
 
-#### Usage with jQuery/Zepto
+### Usage with jQuery/Zepto
 
 You can configure sticky sidebar as a jQuery plugin, just include ``jquery.sticky-sidebar.js`` instead ``sticky-sidebar.js`` file than configure it as any jQuery plugin.
 
@@ -148,6 +149,12 @@ $('#sidebar').stickySidebar({
 {% endhighlight html %}
 
 Make sure to include ``jquery.sticky-sidebar.js`` script file after ``jquery.js``.
+
+### Usage with [ResizeSensor.js](https://github.com/marcj/css-element-queries/blob/master/src/ResizeSensor.js)
+
+Sticky sidebar integrated with [ResizeSensor.js](https://github.com/marcj/css-element-queries/blob/master/src/ResizeSensor.js) to detect when sidebar or container is changed. To use resize sensor with this plugin just make sure to include [ResizeSensor.js](https://github.com/marcj/css-element-queries/blob/master/src/ResizeSensor.js) before `sticky-sidebar.js` code whether through module loader, bundle or event inclusion as a `<script>` and enable `resizeSensor` option (enabled by default) and it will works.
+
+You can choose not to include `ResizeSensor.js` and sticky sidebar will continue work without any problem but without automatically detect resize changes.
 
 --------------------------
 
@@ -223,10 +230,12 @@ var sidebar = new StickySidebar('.sidebar', {innerWrapperSelector: '.sidebar__in
 
 #### resizeSensor 
 
-Sticky sidebar has resize sensor feature when size of sidebar or its container element is changed the plugin will re-calculate all dimensions. This option allow you to enable or disable resize sensor feature. ``Default: true``.
+Sticky sidebar integrated with [ResizeSensor.js](https://github.com/marcj/css-element-queries/blob/master/src/ResizeSensor.js) when size of sidebar or its container element is changed the plugin will re-calculate all dimensions. This option allow you to enable or disable resize sensor feature. ``Default: true``.
+
+Note: This option won't work even include `ResizeSensor.js` to your page, more details in [Usage with ResizeSensor.js](#usage-with-resizesensorjs) section.
 
 {% highlight javascript %}
-var sidebar = new StickySidebar('.sidebar', {resizeSensor: false});
+var sidebar = new StickySidebar('.sidebar', {resizeSensor: true});
 {% endhighlight javasccript %}
 
 #### stickyClass
@@ -315,6 +324,14 @@ stickySidebar.destroy();
 Sticky sidebar plugin takes scrolling preformance very seriously, It’s built from the ground up to let you have sticky elements without incurring scroll lag or jank. 
 
 The biggest cause of scrolling jank is ``onScroll`` has a lot of work. But in this plugin we cached all dimensions as well as adding `will-change: transform` and working with `translate(Y, X)` instead of `top: Y; Left: X;` increases performance significantly, We built Sticky sidebar plugin prevents repainting and reflow to make it smooth as much as possible.
+
+-----------------------------------
+
+## Browser Compatibility
+
+Sticky sidebar works in all modern browsers including Internet Explorer 9 and above, but if you want it to work with IE9, should include [`requestAnimationFrame`](https://gist.github.com/paulirish/1579671) polyfill before sticky sidebar code. 
+
+If you have any issue with browser compatibility don't hesitate to [Submit an issue](https://github.com/abouolia/sticky-sidebar/issues/new).
 
 -----------------------------------
 
