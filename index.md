@@ -154,7 +154,7 @@ Make sure to include ``jquery.sticky-sidebar.js`` script file after ``jquery.js`
 
 Integrate [ResizeSensor.js](https://github.com/marcj/css-element-queries/blob/master/src/ResizeSensor.js) into sticky sidebar to detect when sidebar or container is changed. To use resize sensor with this plugin just make sure to include [ResizeSensor.js](https://github.com/marcj/css-element-queries/blob/master/src/ResizeSensor.js) before `sticky-sidebar.js` code whether through module loader, bundle or event inclusion as a `<script>` and enable `resizeSensor` option (enabled by default) and it will work.
 
-You can choose not to include `ResizeSensor.js` and sticky sidebar will continue to work without any problem and also doesn’t have automatic resize detection.
+You can choose not to include `ResizeSensor.js` and sticky sidebar will continue to work without any problem as well as doesn’t have automatic resize detection.
 
 --------------------------
 
