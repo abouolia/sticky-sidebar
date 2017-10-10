@@ -429,8 +429,8 @@ const StickySidebar = (() => {
             let _unit = ('number' === typeof style.inner[key]) ? 'px' : '';
             this.sidebarInner.style[key] = style.inner[key] + _unit;
           }
-  
-          let affixedEvent = 'affixed.'+ affixType.toLowerCase().replace('viewport', '') + EVENT_KEY;
+          
+          let affixedEvent = 'affixed.'+ affixType.toLowerCase().replace('viewport-', '') + EVENT_KEY;
           StickySidebar.eventTrigger(this.sidebar, affixedEvent);
         } else {
           if( this._initialized ) this.sidebarInner.style.left = style.inner.left;
