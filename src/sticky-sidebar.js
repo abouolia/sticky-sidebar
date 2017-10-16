@@ -629,6 +629,7 @@ const StickySidebar = (() => {
        */
       static offsetRelative(element){
         var result = {left: 0, top: 0};
+
         do{
           let offsetTop = element.offsetTop;
           let offsetLeft = element.offsetLeft;
@@ -638,7 +639,10 @@ const StickySidebar = (() => {
   
           if( ! isNaN(offsetLeft) )
             result.left += offsetLeft;
-        } while( element = element.offsetParent )
+
+          element = ( 'BODY' === element.tagName ) ?
+                      element.parentElement : element.offsetParent;
+        } while(element)
         return result;
       }
   
