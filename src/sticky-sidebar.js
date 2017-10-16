@@ -98,7 +98,7 @@ const StickySidebar = (() => {
         this._breakpoint = false;
         this._resizeListeners = [];
         
-        // Dimenstions of sidebar, container and screen viewport.
+        // Dimensions of sidebar, container and screen viewport.
         this.dimensions = {
           translateY: 0,
           topSpacing: 0,
@@ -125,7 +125,7 @@ const StickySidebar = (() => {
   
       /**
        * Initializes the sticky sidebar by adding inner wrapper, define its container, 
-       * min-width breakpoint, calculating dimenstions, adding helper classes and inline style.
+       * min-width breakpoint, calculating dimensions, adding helper classes and inline style.
        * @private
        */
       initialize(){
@@ -212,7 +212,7 @@ const StickySidebar = (() => {
       }
   
       /**
-       * Calculates dimesntions of sidebar, container and screen viewpoint
+       * Calculates dimensions of sidebar, container and screen viewpoint
        * @public
        */
       calcDimensions(){
@@ -276,7 +276,7 @@ const StickySidebar = (() => {
       }
       
       /**
-       * Detarmine wheather the sidebar is bigger than viewport.
+       * Determine whether the sidebar is bigger than viewport.
        * @public
        * @return {Boolean}
        */
@@ -479,7 +479,7 @@ const StickySidebar = (() => {
       }
   
       /**
-       * Switchs between functions stack for each event type, if there's no 
+       * Switches between functions stack for each event type, if there's no 
        * event, it will re-initialize sticky sidebar.
        * @public
        */
@@ -569,7 +569,7 @@ const StickySidebar = (() => {
       }
   
       /**
-       * Detarmine if the browser supports CSS transfrom feature.
+       * Determine if the browser supports CSS transform feature.
        * @function
        * @static
        * @param {Boolean} transform3d - Detect transform with translate3d.
@@ -673,7 +673,7 @@ const StickySidebar = (() => {
       }
 
       /**
-       * Detarmine weather the element has specific class name.
+       * Determine weather the element has specific class name.
        * @static
        * @param {ObjectDOM} element 
        * @param {String} className 
