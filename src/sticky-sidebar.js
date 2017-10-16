@@ -94,6 +94,7 @@ const StickySidebar = (() => {
         };
   
         this._initialized = false;
+        this._reStyle = false;
         this._breakpoint = false;
         this._resizeListeners = [];
         
@@ -101,7 +102,9 @@ const StickySidebar = (() => {
         this.dimensions = {
           translateY: 0,
           topSpacing: 0,
+          lastTopSpacing: 0,
           bottomSpacing: 0,
+          lastBottomSpacing: 0,
           sidebarHeight: 0,
           sidebarWidth: 0,
           containerTop: 0,
@@ -252,6 +255,24 @@ const StickySidebar = (() => {
   
         if( 'function' === typeof dims.bottomSpacing )
             dims.bottomSpacing = parseInt(dims.bottomSpacing(this.sidebar)) || 0;
+        
+        if( 'VIEWPORT-TOP' === this.affixedType ){
+          // Adjust translate Y in the case decrease top spacing value.
+          if( dims.topSpacing < dims.lastTopSpacing ){
+            dims.translateY += dims.lastTopSpacing - dims.topSpacing;
+            this._reStyle = true; 
+          }
+        
+        } else if( 'VIEWPORT-BOTTOM' === this.affixedType ){
+          // Adjust translate Y in the case decrease bottom spacing value.
+          if( dims.bottomSpacing < dims.lastBottomSpacing ){
+            dims.translateY += dims.lastBottomSpacing - dims.bottomSpacing;
+            this._reStyle = true;
+          }
+        }
+        
+        dims.lastTopSpacing    = dims.topSpacing;
+        dims.lastBottomSpacing = dims.bottomSpacing;
       }
       
       /**
@@ -359,12 +380,12 @@ const StickySidebar = (() => {
   
         switch( affixType ){
           case 'VIEWPORT-TOP':
-            style.inner = {position: 'fixed', top: this.options.topSpacing,
+            style.inner = {position: 'fixed', top: dims.topSpacing,
                   left: dims.sidebarLeft - dims.viewportLeft, width: dims.sidebarWidth};
             break;
           case 'VIEWPORT-BOTTOM':
             style.inner = {position: 'fixed', top: 'auto', left: dims.sidebarLeft,
-                  bottom: this.options.bottomSpacing, width: dims.sidebarWidth};
+                  bottom: dims.bottomSpacing, width: dims.sidebarWidth};
             break;
           case 'CONTAINER-BOTTOM':
           case 'VIEWPORT-UNBOTTOM':
@@ -403,7 +424,7 @@ const StickySidebar = (() => {
       stickyPosition(force){
         if( this._breakpoint ) return;
   
-        force = force || false;
+        force = this._reStyle || force || false;
         
         var offsetTop = this.options.topSpacing;
         var offsetBottom = this.options.bottomSpacing;
