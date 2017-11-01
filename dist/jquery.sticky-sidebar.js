@@ -108,14 +108,17 @@ var StickySidebar = function () {
       };
 
       this._initialized = false;
+      this._reStyle = false;
       this._breakpoint = false;
       this._resizeListeners = [];
 
-      // Dimenstions of sidebar, container and screen viewport.
+      // Dimensions of sidebar, container and screen viewport.
       this.dimensions = {
         translateY: 0,
         topSpacing: 0,
+        lastTopSpacing: 0,
         bottomSpacing: 0,
+        lastBottomSpacing: 0,
         sidebarHeight: 0,
         sidebarWidth: 0,
         containerTop: 0,
@@ -136,7 +139,7 @@ var StickySidebar = function () {
 
     /**
      * Initializes the sticky sidebar by adding inner wrapper, define its container, 
-     * min-width breakpoint, calculating dimenstions, adding helper classes and inline style.
+     * min-width breakpoint, calculating dimensions, adding helper classes and inline style.
      * @private
      */
 
@@ -230,7 +233,7 @@ var StickySidebar = function () {
       }
 
       /**
-       * Calculates dimesntions of sidebar, container and screen viewpoint
+       * Calculates dimensions of sidebar, container and screen viewpoint
        * @public
        */
 
@@ -277,10 +280,27 @@ var StickySidebar = function () {
         if ('function' === typeof dims.topSpacing) dims.topSpacing = parseInt(dims.topSpacing(this.sidebar)) || 0;
 
         if ('function' === typeof dims.bottomSpacing) dims.bottomSpacing = parseInt(dims.bottomSpacing(this.sidebar)) || 0;
+
+        if ('VIEWPORT-TOP' === this.affixedType) {
+          // Adjust translate Y in the case decrease top spacing value.
+          if (dims.topSpacing < dims.lastTopSpacing) {
+            dims.translateY += dims.lastTopSpacing - dims.topSpacing;
+            this._reStyle = true;
+          }
+        } else if ('VIEWPORT-BOTTOM' === this.affixedType) {
+          // Adjust translate Y in the case decrease bottom spacing value.
+          if (dims.bottomSpacing < dims.lastBottomSpacing) {
+            dims.translateY += dims.lastBottomSpacing - dims.bottomSpacing;
+            this._reStyle = true;
+          }
+        }
+
+        dims.lastTopSpacing = dims.topSpacing;
+        dims.lastBottomSpacing = dims.bottomSpacing;
       }
 
       /**
-       * Detarmine wheather the sidebar is bigger than viewport.
+       * Determine whether the sidebar is bigger than viewport.
        * @public
        * @return {Boolean}
        */
@@ -391,12 +411,12 @@ var StickySidebar = function () {
 
         switch (affixType) {
           case 'VIEWPORT-TOP':
-            style.inner = { position: 'fixed', top: this.options.topSpacing,
+            style.inner = { position: 'fixed', top: dims.topSpacing,
               left: dims.sidebarLeft - dims.viewportLeft, width: dims.sidebarWidth };
             break;
           case 'VIEWPORT-BOTTOM':
             style.inner = { position: 'fixed', top: 'auto', left: dims.sidebarLeft,
-              bottom: this.options.bottomSpacing, width: dims.sidebarWidth };
+              bottom: dims.bottomSpacing, width: dims.sidebarWidth };
             break;
           case 'CONTAINER-BOTTOM':
           case 'VIEWPORT-UNBOTTOM':
@@ -435,7 +455,7 @@ var StickySidebar = function () {
       value: function stickyPosition(force) {
         if (this._breakpoint) return;
 
-        force = force || false;
+        force = this._reStyle || force || false;
 
         var affixType = this.getAffixType();
         var style = this._getStyle(affixType);
@@ -455,7 +475,7 @@ var StickySidebar = function () {
             this.sidebarInner.style[_key] = style.inner[_key] + _unit2;
           }
 
-          var affixedEvent = 'affixed.' + affixType.toLowerCase().replace('viewport', '') + EVENT_KEY;
+          var affixedEvent = 'affixed.' + affixType.toLowerCase().replace('viewport-', '') + EVENT_KEY;
           StickySidebar.eventTrigger(this.sidebar, affixedEvent);
         } else {
           if (this._initialized) this.sidebarInner.style.left = style.inner.left;
@@ -486,7 +506,7 @@ var StickySidebar = function () {
       }
 
       /**
-       * Switchs between functions stack for each event type, if there's no 
+       * Switches between functions stack for each event type, if there's no 
        * event, it will re-initialize sticky sidebar.
        * @public
        */
@@ -592,7 +612,7 @@ var StickySidebar = function () {
       }
 
       /**
-       * Detarmine if the browser supports CSS transfrom feature.
+       * Determine if the browser supports CSS transform feature.
        * @function
        * @static
        * @param {Boolean} transform3d - Detect transform with translate3d.
@@ -663,6 +683,7 @@ var StickySidebar = function () {
       key: 'offsetRelative',
       value: function offsetRelative(element) {
         var result = { left: 0, top: 0 };
+
         do {
           var offsetTop = element.offsetTop;
           var offsetLeft = element.offsetLeft;
@@ -670,7 +691,9 @@ var StickySidebar = function () {
           if (!isNaN(offsetTop)) result.top += offsetTop;
 
           if (!isNaN(offsetLeft)) result.left += offsetLeft;
-        } while (element = element.offsetParent);
+
+          element = 'BODY' === element.tagName ? element.parentElement : element.offsetParent;
+        } while (element);
         return result;
       }
 
@@ -705,7 +728,7 @@ var StickySidebar = function () {
       }
 
       /**
-       * Detarmine weather the element has specific class name.
+       * Determine weather the element has specific class name.
        * @static
        * @param {ObjectDOM} element 
        * @param {String} className 
