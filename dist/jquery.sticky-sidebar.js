@@ -10,7 +10,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 /**
  * Sticky Sidebar JavaScript Plugin.
- * @version 3.3.0
+ * @version 3.3.1
  * @author Ahmed Bouhuolia <a.bouhuolia@gmail.com>
  * @license The MIT License (MIT)
  */
@@ -210,8 +210,8 @@ var StickySidebar = function () {
     }, {
       key: 'bindEvents',
       value: function bindEvents() {
-        window.addEventListener('resize', this, { passive: true });
-        window.addEventListener('scroll', this, { passive: true });
+        window.addEventListener('resize', this, { passive: true, capture: false });
+        window.addEventListener('scroll', this, { passive: true, capture: false });
 
         this.sidebar.addEventListener('update' + EVENT_KEY, this);
 
@@ -588,8 +588,8 @@ var StickySidebar = function () {
     }, {
       key: 'destroy',
       value: function destroy() {
-        window.removeEventListener('resize', this);
-        window.removeEventListener('scroll', this);
+        window.removeEventListener('resize', this, { caption: false });
+        window.removeEventListener('scroll', this, { caption: false });
 
         this.sidebar.classList.remove(this.options.stickyClass);
         this.sidebar.style.minHeight = '';

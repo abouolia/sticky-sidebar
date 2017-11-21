@@ -1,6 +1,6 @@
 /**
  * Sticky Sidebar JavaScript Plugin.
- * @version 3.3.0
+ * @version 3.3.1
  * @author Ahmed Bouhuolia <a.bouhuolia@gmail.com>
  * @license The MIT License (MIT)
  */
@@ -11,7 +11,7 @@ const StickySidebar = (() => {
     // ---------------------------------
     //
     const EVENT_KEY = '.stickySidebar';
-    const VERSION   = '3.2.0';
+    const VERSION   = '3.3.1';
   
     const DEFAULTS = {
       
@@ -192,8 +192,8 @@ const StickySidebar = (() => {
        * @protected
        */
       bindEvents(){
-        window.addEventListener('resize', this, {passive: true});
-        window.addEventListener('scroll', this, {passive: true});
+        window.addEventListener('resize', this, {passive: true, capture: false});
+        window.addEventListener('scroll', this, {passive: true, capture: false});
   
         this.sidebar.addEventListener('update' + EVENT_KEY, this);
   
@@ -543,8 +543,8 @@ const StickySidebar = (() => {
        * @public
        */
       destroy(){
-        window.removeEventListener('resize', this);
-        window.removeEventListener('scroll', this);
+        window.removeEventListener('resize', this, {caption: false});
+        window.removeEventListener('scroll', this, {caption: false});
   
         this.sidebar.classList.remove(this.options.stickyClass);
         this.sidebar.style.minHeight = '';
