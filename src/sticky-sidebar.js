@@ -543,8 +543,8 @@ const StickySidebar = (() => {
        * @public
        */
       destroy(){
-        window.removeEventListener('resize', this, {caption: false});
-        window.removeEventListener('scroll', this, {caption: false});
+        window.removeEventListener('resize', this, {capture: false});
+        window.removeEventListener('scroll', this, {capture: false});
   
         this.sidebar.classList.remove(this.options.stickyClass);
         this.sidebar.style.minHeight = '';
