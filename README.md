@@ -6,11 +6,11 @@ Pure JavaScript plugin for making smart and high performance sticky sidebars.
 
 [Scrollable Sticky Element](https://abouolia.github.io/sticky-sidebar/examples/scrollable-element.html)
 
-See for complete documentation and examples [abouolia.github.com/sticky-sidebar](http://abouolia.github.com/sticky-sidebar)
+For complete documentation and examples see [abouolia.github.com/sticky-sidebar](http://abouolia.github.com/sticky-sidebar)
 
-## Why sticky sidebar is awesome? 
+## Why is sticky sidebar so awesome?
 
-* It does not re-calculate all dimensions when scrolling, just neccessary dimensions.
+* It does not re-calculate all dimensions when scrolling, just necessary dimensions.
 * Super smooth without incurring scroll lag or jank and no page reflows.
 * Integrated with resize sensor to re-calculate all dimenstions of the plugin when size of sidebar or its container is changed.
 * It has event trigger on each affix type to hook your code under particular situation.
@@ -19,9 +19,9 @@ See for complete documentation and examples [abouolia.github.com/sticky-sidebar]
 
 ## Install
 
-You can download sticky sidebar jquery plugin from Bowser, NPM or just simply download it from here than put ``sticky-sidebar.js`` file in your project folder.
+You can download sticky sidebar jQuery plugin from Bowser, NPM or just simply download it from this page and link to the ``sticky-sidebar.js`` file in your project folder.
 
-#### Bower 
+#### Bower
 
 If you are using bower as package manager:
 
@@ -29,9 +29,9 @@ If you are using bower as package manager:
 bower install sticky-sidebar
 ````
 
-#### NPM 
+#### NPM
 
-If you are using NPM as package manager: 
+If you are using NPM as package manager:
 
 ````
 npm install sticky-sidebar
@@ -39,7 +39,7 @@ npm install sticky-sidebar
 
 ## Usage
 
-Your website's html structure has to be similer to this in order to work:
+Your website's html structure has to be similar to this in order to work:
 
 ````html
 <div class="main-content">
@@ -95,13 +95,13 @@ Sticky sidebar integrated with [ResizeSensor.js](https://github.com/marcj/css-el
 
 You can choose not to include `ResizeSensor.js` and sticky sidebar will continue work without any problem but without automatically detect resize changes.
 
-## Broswers Support
+## Browser Support
 
 Sticky sidebar works in all modern browsers including Internet Explorer 9 and above, but if you want it to work with IE9, should include [`requestAnimationFrame`](https://gist.github.com/paulirish/1579671) polyfill before sticky sidebar code.
 
-If you have any issue with browser compatibility don’t hesitate to [Submit an issue](https://github.com/abouolia/sticky-sidebar/issues/new).
+If you have any issues with browser compatibility don’t hesitate to [Submit an issue](https://github.com/abouolia/sticky-sidebar/issues/new).
 
-## License 
+## License
 
 Sticky Sidebar is released under the MIT license. Have at it.
 
