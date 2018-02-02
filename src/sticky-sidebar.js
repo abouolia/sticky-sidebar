@@ -317,8 +317,6 @@ const StickySidebar = (() => {
             this._getAffixTypeScrollingUp() : this._getAffixTypeScrollingDown();
         }
 
-        console.log(affixType);
-
         // Make sure the translate Y is not bigger than container height.
         dims.translateY = Math.max(0, dims.translateY);
         dims.translateY = Math.min(dims.containerHeight, dims.translateY);
@@ -341,7 +339,7 @@ const StickySidebar = (() => {
         var affixType = this.affixedType;
         
         if( this.isSidebarFitsViewport() ){
-          if( dims.containerBottom <= dims.sidebarHeight + colliderTop ){
+          if( dims.sidebarHeight + colliderTop >= dims.containerBottom ){
             dims.translateY = dims.containerBottom - sidebarBottom;
             affixType = 'CONTAINER-BOTTOM'; 
 
