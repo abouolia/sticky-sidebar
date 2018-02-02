@@ -432,8 +432,7 @@ describe('StickySidebar', () => {
             mockRaf.step();
             
             try{
-              console.log(stickySidebar.affixedType);
-              // assert.equal(stickySidebar.affixedType, 'VIEWPORT-TOP');
+              assert.equal(stickySidebar.affixedType, 'VIEWPORT-TOP');
               resolve();
             } catch(error){
               done(error);
@@ -639,11 +638,11 @@ describe('StickySidebar', () => {
         .then(() => scrollTo((window.innerHeight * 0.8) + 75))
         .then(() => {
           mockRaf.step();
-        
-          try{
+
+          try{  
             assert.deepOwnInclude( stickySidebar._getStyle('VIEWPORT-UNBOTTOM'), {
               inner: { position: 'relative', top: '', left: '', bottom: '', width: '',
-                transform: 'translate3d(0, '+ Math.round((window.innerHeight / 2) - stickySidebar.options.bottomSpacing) +'px, 0)' },
+                transform: 'translate3d(0, '+ Math.round(parseInt(window.innerHeight / 2) - stickySidebar.options.bottomSpacing) +'px, 0)' },
               outer: {height: Math.round(window.innerHeight * 1.5), position: 'relative'}
             })
           } catch(error){
