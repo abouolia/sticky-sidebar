@@ -299,63 +299,16 @@ const StickySidebar = (() => {
       }
   
       /**
-       * Gets affix type of sidebar according to current scrollTop and scrollLeft.
-       * Holds all logical affix of the sidebar when scrolling up and down and when sidebar 
-       * is bigger than viewport and vice versa.
+       * Gets affix type of sidebar according to current scroll top and scrolling direction.
        * @public
        * @return {String|False} - Proper affix type.
        */
       getAffixType(){
-        var dims = this.dimensions, affixType = '';
-  
         this._calcDimensionsWithScroll();
   
-        var sidebarBottom = dims.sidebarHeight + dims.containerTop;
-        var colliderTop = dims.viewportTop + dims.topSpacing;
-        var colliderBottom = dims.viewportBottom - dims.bottomSpacing;
-  
-        // When browser is scrolling top.
-        if( 'up' === this.direction ){
-          if( colliderTop <= dims.containerTop ){
-            dims.translateY = 0;
-            affixType = 'STATIC';
-  
-          } else if( colliderTop <= dims.translateY + dims.containerTop ){
-            dims.translateY = colliderTop - dims.containerTop;
-            affixType = 'VIEWPORT-TOP';
-  
-          } else if( ! this.isSidebarFitsViewport() && dims.containerTop <= colliderTop ){
-            affixType = 'VIEWPORT-UNBOTTOM';
-          }
-        // When browser is scrolling up.
-        } else {
-          // When sidebar element is not bigger than screen viewport.
-          if( this.isSidebarFitsViewport() ){
-  
-            if( dims.sidebarHeight + colliderTop >= dims.containerBottom ){
-              dims.translateY = dims.containerBottom - sidebarBottom;
-              affixType = 'CONTAINER-BOTTOM'; 
-  
-            } else if( colliderTop >= dims.containerTop ){
-              dims.translateY = colliderTop - dims.containerTop;
-              affixType = 'VIEWPORT-TOP';
-            }
-          // When sidebar element is bigger than screen viewport.
-          } else {
-      
-            if( dims.containerBottom <= colliderBottom ){
-              dims.translateY = dims.containerBottom - sidebarBottom; 
-              affixType = 'CONTAINER-BOTTOM';    
-  
-            } else if( sidebarBottom + dims.translateY <= colliderBottom ){
-              dims.translateY = colliderBottom - sidebarBottom;
-              affixType = 'VIEWPORT-BOTTOM';
-            
-            } else if( dims.containerTop + dims.translateY <= colliderTop ){
-              affixType = 'VIEWPORT-UNBOTTOM';
-            }
-          }
-        }
+        var dims = this.dimensions;
+        var affixType = ( 'up' === this.direction ) ? 
+          this._getAffixTypeScrollingUp() : this._getAffixTypeScrollingDown();
   
         // Make sure the translate Y is not bigger than container height.
         dims.translateY = Math.max(0, dims.translateY);
@@ -365,7 +318,75 @@ const StickySidebar = (() => {
         dims.lastViewportTop = dims.viewportTop;
         return affixType;
       }
-  
+
+      /**
+       * Get affix type while scrolling down.
+       * @private
+       * @return {String} - Proper affix type of scrolling down direction.
+       */
+      _getAffixTypeScrollingDown(){
+        var dims = this.dimensions;
+        var sidebarBottom = dims.sidebarHeight + dims.containerTop;
+        var colliderTop = dims.viewportTop + dims.topSpacing;
+        var colliderBottom = dims.viewportBottom - dims.bottomSpacing;
+        var affixType = '';
+
+        if( this.isSidebarFitsViewport() ){
+
+          if( dims.sidebarHeight + colliderTop >= dims.containerBottom ){
+            dims.translateY = dims.containerBottom - sidebarBottom;
+            affixType = 'CONTAINER-BOTTOM'; 
+
+          } else if( colliderTop >= dims.containerTop ){
+            dims.translateY = colliderTop - dims.containerTop;
+            affixType = 'VIEWPORT-TOP';
+          }
+        } else {
+
+          if( dims.containerBottom <= colliderBottom ){
+            dims.translateY = dims.containerBottom - sidebarBottom; 
+            affixType = 'CONTAINER-BOTTOM';    
+
+          } else if( sidebarBottom + dims.translateY <= colliderBottom ){
+            dims.translateY = colliderBottom - sidebarBottom;
+            affixType = 'VIEWPORT-BOTTOM';
+          
+          } else if( dims.containerTop + dims.translateY <= colliderTop ){
+            affixType = 'VIEWPORT-UNBOTTOM';
+          }
+        }
+
+        return affixType;
+      }
+      
+      /**
+       * Get affix type while scrolling up.
+       * @private
+       * @return {String} - Proper affix type of scrolling up direction.
+       */
+      _getAffixTypeScrollingUp(){
+        var dims = this.dimensions;
+        var colliderTop = dims.viewportTop + dims.topSpacing;
+        var affixType = '';
+
+        if( colliderTop <= dims.containerTop ){
+          dims.translateY = 0;
+          affixType = 'STATIC';
+
+        } else if( colliderTop <= dims.translateY + dims.containerTop ){
+          dims.translateY = colliderTop - dims.containerTop;
+          affixType = 'VIEWPORT-TOP';
+        
+        } else if( ! this.isSidebarFitsViewport() ){
+
+          if( dims.containerTop <= colliderTop ){
+            affixType = 'VIEWPORT-UNBOTTOM';
+          } 
+        }
+
+        return affixType;
+      }
+
       /**
        * Gets inline style of sticky sidebar wrapper and inner wrapper according 
        * to its affix type.
