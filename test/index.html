@@ -1,0 +1,64 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Mocha Tests</title>
+  <link href="../node_modules/mocha/mocha.css" rel="stylesheet" />
+  <style rel="stylesheet"> 
+    body{
+        margin: 0;
+        padding: 0;
+        border: 0;
+    }
+
+    .container{
+        margin-top: 75px;
+        margin-bottom: 50vh;
+        width: 700px;
+        margin-left: 100px
+    }
+
+    .container:after{
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    .sidebar{
+        width: 200px;
+        float: left;
+    }
+
+    .inner-wrapper-sticky,
+    .sidebar-inner{
+        background: red;
+        height: 300px;
+    }
+    
+    .content{
+        height: 2000px;
+        margin-left: 215px;
+        background: cadetblue;
+    }
+  </style>
+</head>
+<body>
+    <div id="mocha-fixtures"></div>
+    <div id="mocha"></div>
+    
+    <script src="../node_modules/jquery/dist/jquery.js"></script>
+    <script src="../dist/jquery.sticky-sidebar.js"></script>
+    <script src="../dist/sticky-sidebar.js"></script>
+    <script src="../node_modules/sinon/pkg/sinon.js"></script>
+    <script src="../node_modules/mocha/mocha.js"></script>
+    <script src="../node_modules/chai/chai.js"></script>
+    <script src="./mockraf.js"></script>
+
+    <script>mocha.setup('bdd')</script>
+    <script src="./test.js" type="text/javascript"></script>
+    <script>
+        mocha.checkLeaks();
+        mocha.globals(['jQuery']);
+        mocha.run();
+    </script>
+</body>
+</html>
