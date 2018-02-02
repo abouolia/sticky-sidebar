@@ -306,7 +306,7 @@ const StickySidebar = (() => {
        * @return {String|False} - Proper affix type.
        */
       getAffixType(){
-        var dims = this.dimensions, affixType = false;
+        var dims = this.dimensions, affixType = '';
   
         this._calcDimensionsWithScroll();
   
@@ -360,6 +360,7 @@ const StickySidebar = (() => {
         // Make sure the translate Y is not bigger than container height.
         dims.translateY = Math.max(0, dims.translateY);
         dims.translateY = Math.min(dims.containerHeight, dims.translateY);
+        dims.translateY = Math.round(dims.translateY);
   
         dims.lastViewportTop = dims.viewportTop;
         return affixType;
@@ -442,13 +443,13 @@ const StickySidebar = (() => {
             StickySidebar.addClass(this.sidebar, this.options.stickyClass);
           
           for( let key in style.outer ){
-            let _unit = ('number' === typeof style.outer[key]) ? 'px' : '';
-            this.sidebar.style[key] = style.outer[key];
+            let unit = ('number' === typeof style.outer[key]) ? 'px' : '';
+            this.sidebar.style[key] = style.outer[key] + unit;
           }
   
           for( let key in style.inner ){
-            let _unit = ('number' === typeof style.inner[key]) ? 'px' : '';
-            this.sidebarInner.style[key] = style.inner[key] + _unit;
+            let unit = ('number' === typeof style.inner[key]) ? 'px' : '';
+            this.sidebarInner.style[key] = style.inner[key] + unit;
           }
           
           let affixedEvent = 'affixed.'+ affixType.toLowerCase().replace('viewport-', '') + EVENT_KEY;
