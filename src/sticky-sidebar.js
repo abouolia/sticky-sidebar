@@ -305,11 +305,20 @@ const StickySidebar = (() => {
        */
       getAffixType(){
         this._calcDimensionsWithScroll();
-  
         var dims = this.dimensions;
-        var affixType = ( 'up' === this.direction ) ? 
-          this._getAffixTypeScrollingUp() : this._getAffixTypeScrollingDown();
-  
+        var colliderTop = dims.viewportTop + dims.topSpacing;
+        var affixType = this.affixedType;
+
+       if( colliderTop <= dims.containerTop ){
+          dims.translateY = 0;
+          affixType = 'STATIC';
+        } else {
+          affixType = ( 'up' === this.direction ) ? 
+            this._getAffixTypeScrollingUp() : this._getAffixTypeScrollingDown();
+        }
+
+        console.log(affixType);
+
         // Make sure the translate Y is not bigger than container height.
         dims.translateY = Math.max(0, dims.translateY);
         dims.translateY = Math.min(dims.containerHeight, dims.translateY);
@@ -329,11 +338,10 @@ const StickySidebar = (() => {
         var sidebarBottom = dims.sidebarHeight + dims.containerTop;
         var colliderTop = dims.viewportTop + dims.topSpacing;
         var colliderBottom = dims.viewportBottom - dims.bottomSpacing;
-        var affixType = '';
-
+        var affixType = this.affixedType;
+        
         if( this.isSidebarFitsViewport() ){
-
-          if( dims.sidebarHeight + colliderTop >= dims.containerBottom ){
+          if( dims.containerBottom <= dims.sidebarHeight + colliderTop ){
             dims.translateY = dims.containerBottom - sidebarBottom;
             affixType = 'CONTAINER-BOTTOM'; 
 
@@ -342,7 +350,6 @@ const StickySidebar = (() => {
             affixType = 'VIEWPORT-TOP';
           }
         } else {
-
           if( dims.containerBottom <= colliderBottom ){
             dims.translateY = dims.containerBottom - sidebarBottom; 
             affixType = 'CONTAINER-BOTTOM';    
@@ -367,13 +374,9 @@ const StickySidebar = (() => {
       _getAffixTypeScrollingUp(){
         var dims = this.dimensions;
         var colliderTop = dims.viewportTop + dims.topSpacing;
-        var affixType = '';
+        var affixType = this.affixedType;
 
-        if( colliderTop <= dims.containerTop ){
-          dims.translateY = 0;
-          affixType = 'STATIC';
-
-        } else if( colliderTop <= dims.translateY + dims.containerTop ){
+        if( colliderTop <= dims.translateY + dims.containerTop ){
           dims.translateY = colliderTop - dims.containerTop;
           affixType = 'VIEWPORT-TOP';
         

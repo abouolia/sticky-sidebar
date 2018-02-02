@@ -1,6 +1,4 @@
 var assert = chai.assert;
-var expect = chai.expect;
-
 var fixture = document.getElementById('mocha-fixtures');
 var mockRaf = createMockRaf();
 
@@ -308,7 +306,7 @@ describe('StickySidebar', () => {
 
         window.addEventListener('scroll', (event) => {
           mockRaf.step();
-          expect(['', 'STATIC']).to.include(stickySidebar.affixedType);
+          assert.equal(stickySidebar.affixedType, 'STATIC');
           done();
         }, {once: true})
 
@@ -427,7 +425,7 @@ describe('StickySidebar', () => {
           window.scrollTo(0, document.body.scrollHeight - window.innerHeight);
         });
 
-        const scrollOnViewportTopAffix = (scrollTop) => new Promise( (resolve) => {
+        const scrollOnViewportTopAffix = (scrollTop) => new Promise( (resolve, reject) => {
           window.addEventListener('scroll', (event) => {
             mockRaf.step();
             
@@ -468,7 +466,7 @@ describe('StickySidebar', () => {
             mockRaf.step()
 
             try{
-              expect(['', 'STATIC']).to.include(stickySidebar.affixedType);
+              assert.equal(stickySidebar.affixedType, 'STATIC');
               resolve();
             } catch(error) {
               done(error);
