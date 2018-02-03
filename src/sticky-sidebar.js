@@ -432,7 +432,7 @@ const StickySidebar = (() => {
   
         style.outer = StickySidebar.extend({height: '', position: ''}, style.outer);
         style.inner = StickySidebar.extend({position: 'relative', top: '', left: '',
-            bottom: '', width: '',  transform: this._getTranslate()}, style.inner);
+            bottom: '', width: '',  transform: ''}, style.inner);
   
         return style;
       }
@@ -710,6 +710,15 @@ const StickySidebar = (() => {
           return element.classList.contains(className);
         else
           return new RegExp('(^| )' + className + '( |$)', 'gi').test(element.className);
+      }
+
+      /**
+       * Gets default values of configuration options.
+       * @static
+       * @return {Object} 
+       */
+      static get defaults(){
+        return DEFAULTS;
       }
     }
   

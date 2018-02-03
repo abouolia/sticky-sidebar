@@ -32,7 +32,7 @@ describe('StickySidebar', () => {
   describe('constructor', () => {
 
     it('Shoud throw explicit error when there is no specific element.', () => {
-      assert.throws(() => { new StickySidebar() });
+      assert.throws(() => { new StickySidebar() }, 'There is no specific sidebar element.');
     })
 
     it('should all default configuration options has the right value.', () => {
@@ -41,7 +41,8 @@ describe('StickySidebar', () => {
       '  <div class="content"><span>Lorem Ipsum</span></div>' +
       '</div>';
 
-      assert.isOk(new StickySidebar('.sidebar'));
+      const stickySidebar = new StickySidebar('.sidebar');
+      assert.deepEqual(StickySidebar.defaults, stickySidebar.options);
     });
 
     it('Should options of custom configuration extend currectly with default options', () => {
@@ -63,7 +64,7 @@ describe('StickySidebar', () => {
 
       assert.throws( () => {
         new StickySidebar('.sidebar', {containerSelector: '.sidebar-container'});
-      })
+      }, 'The container does not contains on the sidebar.')
     });
   })
 
@@ -530,8 +531,7 @@ describe('StickySidebar', () => {
 
       window.addEventListener('scroll', (event) => {
         assert.deepOwnInclude( stickySidebar._getStyle('STATIC'), {
-          inner: {position: 'relative', top: '', bottom: '', left: '', width: '',
-            transform: 'translate3d(0, 0, 0)'},
+          inner: {position: 'relative', top: '', bottom: '', left: '', width: '', transform: ''},
           outer: {height: '', position: ''}
         });
         done();
@@ -554,9 +554,8 @@ describe('StickySidebar', () => {
         mockRaf.step();
         
         assert.deepOwnInclude( stickySidebar._getStyle('VIEWPORT-TOP'), {
-          inner: { position: 'fixed', top: 60, bottom: '', left: 100, width: 200,
-          transform: 'translate3d(0, 0, 0)'},
-          outer: { height: 300, position: 'relative' }
+          inner: {position: 'fixed', top: 60, bottom: '', left: 100, width: 200, transform: ''},
+          outer: {height: 300, position: 'relative' }
         });
         done();
       }, {once: true});
@@ -579,9 +578,8 @@ describe('StickySidebar', () => {
         mockRaf.step();
 
         assert.deepOwnInclude( stickySidebar._getStyle('VIEWPORT-BOTTOM'), {
-          inner: { position: 'fixed', top: 'auto', bottom: 60, left: 100, width: 200,
-            transform: 'translate3d(0, 0, 0)' },
-          outer: { height: Math.round(window.innerHeight * 1.5), position: 'relative' }
+          inner: {position: 'fixed', top: 'auto', bottom: 60, left: 100, width: 200, transform: ''},
+          outer: {height: Math.round(window.innerHeight * 1.5), position: 'relative'}
         });
         done();
       }, {once: true})
@@ -847,7 +845,7 @@ describe('StickySidebar', () => {
       '  <div class="content"><span>Lorem Ipsum</span></div>' +
       '</div>';
 
-      assert.throws(() => { $('.sidebar').stickySidebar('noMethod'); });
+      assert.throws(() => { $('.sidebar').stickySidebar('noMethod'); }, 'No method named "noMethod"');
     });
   }); 
 });
