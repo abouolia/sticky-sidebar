@@ -11,10 +11,9 @@ const StickySidebar = (() => {
     // ---------------------------------
     //
     const EVENT_KEY = '.stickySidebar';
-    const VERSION   = '3.3.1';
+    const VERSION   = '3.3.3';
   
     const DEFAULTS = {
-      
       /**
        * Additional top spacing of the element when it becomes sticky.
        * @type {Numeric|Function}
@@ -88,7 +87,7 @@ const StickySidebar = (() => {
         // Current Affix Type of sidebar element.
         this.affixedType = 'STATIC';
         this.direction = 'down';
-        this.support = {
+        this.support = { 
           transform:   false,
           transform3d: false
         };
@@ -96,11 +95,11 @@ const StickySidebar = (() => {
         this._initialized = false;
         this._reStyle = false;
         this._breakpoint = false;
-        this._resizeListeners = [];
         
         // Dimensions of sidebar, container and screen viewport.
         this.dimensions = {
           translateY: 0,
+          maxTranslateY: 0,
           topSpacing: 0,
           lastTopSpacing: 0,
           bottomSpacing: 0,
@@ -130,7 +129,7 @@ const StickySidebar = (() => {
        */
       initialize(){
         this._setSupportFeatures();
-  
+        
         // Get sticky sidebar inner wrapper, if not found, will create one.
         if( this.options.innerWrapperSelector ){
           this.sidebarInner = this.sidebar.querySelector(this.options.innerWrapperSelector);
@@ -230,7 +229,10 @@ const StickySidebar = (() => {
         
         // Screen viewport dimensions.
         dims.viewportHeight = window.innerHeight;
-  
+
+        // Maximum sidebar translate Y.
+        dims.maxTranslateY = dims.containerHeight - dims.sidebarHeight;
+
         this._calcDimensionsWithScroll();
       }
   
@@ -262,7 +264,6 @@ const StickySidebar = (() => {
             dims.translateY += dims.lastTopSpacing - dims.topSpacing;
             this._reStyle = true; 
           }
-        
         } else if( 'VIEWPORT-BOTTOM' === this.affixedType ){
           // Adjust translate Y in the case decrease bottom spacing value.
           if( dims.bottomSpacing < dims.lastBottomSpacing ){
@@ -356,7 +357,8 @@ const StickySidebar = (() => {
             dims.translateY = colliderBottom - sidebarBottom;
             affixType = 'VIEWPORT-BOTTOM';
           
-          } else if( dims.containerTop + dims.translateY <= colliderTop ){
+          } else if( dims.containerTop + dims.translateY <= colliderTop &&
+            (0 !== dims.translateY && dims.maxTranslateY !== dims.translateY) ){
             affixType = 'VIEWPORT-UNBOTTOM';
           }
         }
@@ -371,16 +373,23 @@ const StickySidebar = (() => {
        */
       _getAffixTypeScrollingUp(){
         var dims = this.dimensions;
+        var sidebarBottom = dims.sidebarHeight + dims.containerTop;
         var colliderTop = dims.viewportTop + dims.topSpacing;
+        var colliderBottom = dims.viewportBottom - dims.bottomSpacing;
         var affixType = this.affixedType;
 
         if( colliderTop <= dims.translateY + dims.containerTop ){
           dims.translateY = colliderTop - dims.containerTop;
           affixType = 'VIEWPORT-TOP';
         
+        } else if( dims.containerBottom <= colliderBottom ){
+          dims.translateY = dims.containerBottom - sidebarBottom;
+          affixType = 'CONTAINER-BOTTOM';
+
         } else if( ! this.isSidebarFitsViewport() ){
 
-          if( dims.containerTop <= colliderTop ){
+          if( dims.containerTop <= colliderTop && 
+              (0 !== dims.translateY && dims.maxTranslateY !== dims.translateY) ){
             affixType = 'VIEWPORT-UNBOTTOM';
           } 
         }
@@ -511,7 +520,6 @@ const StickySidebar = (() => {
         this._running = true;
   
         ((eventType) => {
-
           requestAnimationFrame(() => {
             switch( eventType ){
               // When browser is scrolling and re-calculate just dimensions
