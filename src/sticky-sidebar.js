@@ -310,7 +310,7 @@ const StickySidebar = (() => {
         var colliderTop = dims.viewportTop + dims.topSpacing;
         var affixType = this.affixedType;
 
-       if( colliderTop <= dims.containerTop ){
+       if( colliderTop <= dims.containerTop || dims.containerHeight <= dims.sidebarHeight ){
           dims.translateY = 0;
           affixType = 'STATIC';
         } else {
