@@ -66,6 +66,11 @@
 			margin: 0;
 		}
 
+		.clearfix:after{
+			display: block;
+			content: "";
+			clear: both;
+		}
 	</style>
 
 </head>
@@ -77,8 +82,8 @@
 		</div>
 	</header>
 
-	<div class="container">
-	<div id="sidebar">
+	<div class="container clearfix">
+		<div id="sidebar">
 			<div class="sidebar__inner">
 				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras tempus id leo et aliquam. </p>
 
