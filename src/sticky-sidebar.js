@@ -54,7 +54,13 @@ const StickySidebar = (() => {
        * The sidebar returns to its normal position if its width below this value.
        * @type {Numeric}
        */
-      minWidth: false
+      minWidth: false,
+      
+      /**
+       * The sidebar stops in this value before container bottom
+       * @type {Numeric}
+       */
+      containerPaddingBottom: 0
     };
   
     // ---------------------------------
@@ -111,6 +117,7 @@ const StickySidebar = (() => {
           viewportHeight: 0,
           viewportTop: 0, 
           lastViewportTop: 0,
+          containerPaddingBottom: 0,
         };
   
         // Bind event handlers for referencability.
@@ -220,7 +227,8 @@ const StickySidebar = (() => {
   
         // Container of sticky sidebar dimensions.
         dims.containerTop    = StickySidebar.offsetRelative(this.container).top;
-        dims.containerHeight = this.container.clientHeight;
+        dims.containerPaddingBottom = this.options.containerPaddingBottom;
+        dims.containerHeight = this.container.clientHeight - dims.containerPaddingBottom;
         dims.containerBottom = dims.containerTop + dims.containerHeight;
   
         // Sidebar dimensions.
