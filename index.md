@@ -348,7 +348,7 @@ $.fn.stickySidebar = stickySidebar; // Give $().stickySidebar functionality.
 
 ## Author
 
-Ahmed Bouhuolia [GitHub](http://github.com/abouolia)/[Facebook](https://facebook.com/Ahmed.bouhuolia)/[Twitter](https://twitter/ahmed_bouhu).
+Ahmed Bouhuolia [GitHub](http://github.com/abouolia)/[Facebook](https://facebook.com/Ahmed.bouhuolia)/[Twitter](https://twitter.com/ahmed_bouhu).
 
 ### License
 
