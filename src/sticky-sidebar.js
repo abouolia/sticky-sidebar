@@ -244,7 +244,11 @@ const StickySidebar = (() => {
         var dims = this.dimensions;
   
         dims.sidebarLeft = StickySidebar.offsetRelative(this.sidebar).left;
-  
+
+        if (document.width > window.innerWidth) {
+            dims.sidebarLeft = dims.sidebarLeft + document.body.scrollLeft;
+        }
+
         dims.viewportTop    = document.documentElement.scrollTop || document.body.scrollTop;
         dims.viewportBottom = dims.viewportTop + dims.viewportHeight;
         dims.viewportLeft   = document.documentElement.scrollLeft || document.body.scrollLeft;
