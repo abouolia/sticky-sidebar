@@ -500,7 +500,7 @@ const StickySidebar = (() => {
        */
       _widthBreakpoint(){
   
-        if( window.innerWidth <= this.options.minWidth ){
+        if( window.innerWidth < this.options.minWidth ){
           this._breakpoint = true;
           this.affixedType = 'STATIC';
   
