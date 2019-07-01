@@ -54,7 +54,14 @@ const StickySidebar = (() => {
        * The sidebar returns to its normal position if its width below this value.
        * @type {Numeric}
        */
-      minWidth: false
+      minWidth: false,
+
+      /**
+       * Ignore the viewport size and always affix the sidebar to the top of the screen when it is sticky.
+       * If the sidebar is taller than the screen, it will not require scrolling to the bottom of the sidebar before making it sticky.
+       * @type {Boolean}
+       */
+      alwaysFixToTop: false
     };
   
     // ---------------------------------
@@ -341,7 +348,7 @@ const StickySidebar = (() => {
         var colliderBottom = dims.viewportBottom - dims.bottomSpacing;
         var affixType = this.affixedType;
         
-        if( this.isSidebarFitsViewport() ){
+        if( this.isSidebarFitsViewport() || this.options.alwaysFixToTop ){
           if( dims.sidebarHeight + colliderTop >= dims.containerBottom ){
             dims.translateY = dims.containerBottom - sidebarBottom;
             affixType = 'CONTAINER-BOTTOM'; 
@@ -388,7 +395,7 @@ const StickySidebar = (() => {
           dims.translateY = dims.containerBottom - sidebarBottom;
           affixType = 'CONTAINER-BOTTOM';
 
-        } else if( ! this.isSidebarFitsViewport() ){
+        } else if( ! this.isSidebarFitsViewport() && ! this.options.alwaysFixToTop ){
 
           if( dims.containerTop <= colliderTop && 
               (0 !== dims.translateY && dims.maxTranslateY !== dims.translateY) ){
