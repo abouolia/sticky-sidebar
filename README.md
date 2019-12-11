@@ -54,7 +54,9 @@ Your website's html structure has to be similar to this in order to work:
 </div>
 ````
 
-Note that inner sidebar wrapper ``.sidebar__innner`` is optional but highly recommended, if you don't write it yourself, the script will create one for you under class name ``inner-wrapper-sticky``. but this may cause many problems.
+Note that inner sidebar wrapper ``.sidebar__inner`` is optional but highly recommended, if you don't write it yourself, the script will create one for you under class name ``inner-wrapper-sticky``. but this may cause many problems.
+
+If your content is inside a fixed-height div with a scrollbar, this must be specified with the ``scrollContainer`` option.
 
 For the above example, you can use the following JavaScript:
 
@@ -66,7 +68,8 @@ For the above example, you can use the following JavaScript:
     topSpacing: 20,
     bottomSpacing: 20,
     containerSelector: '.main-content',
-    innerWrapperSelector: '.sidebar__inner'
+    innerWrapperSelector: '.sidebar__inner',
+    scrollContainer: '#main-viewport'
   });
 </script>
 ````
