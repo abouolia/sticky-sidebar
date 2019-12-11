@@ -31,6 +31,11 @@ const StickySidebar = (() => {
        * @type {String|False}
        */
       containerSelector: false,
+
+      /**
+       * Parent element where the scrolling happens.
+       */
+      scrollContainer: false,
   
       /**
        * Inner wrapper selector.
@@ -162,6 +167,9 @@ const StickySidebar = (() => {
           if( ! containers.length )
             throw new Error("The container does not contains on the sidebar.");
         }
+
+        // Get scroll container, if provided
+        this.scrollContainer = this.options.scrollContainer ? document.querySelector(this.options.scrollContainer) : undefined;
         
         // If top/bottom spacing is not function parse value to integer.
         if( 'function' !== typeof this.options.topSpacing )
@@ -191,8 +199,10 @@ const StickySidebar = (() => {
        * @protected
        */
       bindEvents(){
-        window.addEventListener('resize', this, {passive: true, capture: false});
-        window.addEventListener('scroll', this, {passive: true, capture: false});
+        this.eventTarget = this.scrollContainer ? this.scrollContainer : window;
+
+        this.eventTarget.addEventListener('resize', this, { passive: true, capture: false });
+        this.eventTarget.addEventListener('scroll', this, { passive: true, capture: false });
   
         this.sidebar.addEventListener('update' + EVENT_KEY, this);
   
@@ -244,10 +254,15 @@ const StickySidebar = (() => {
         var dims = this.dimensions;
   
         dims.sidebarLeft = StickySidebar.offsetRelative(this.sidebar).left;
-  
-        dims.viewportTop    = document.documentElement.scrollTop || document.body.scrollTop;
+
+        if (this.scrollContainer) {
+          dims.viewportTop = this.scrollContainer.scrollTop;
+          dims.viewportLeft = this.scrollContainer.scrollLeft;
+        } else {
+          dims.viewportTop = document.documentElement.scrollTop || document.body.scrollTop;
+          dims.viewportLeft = document.documentElement.scrollLeft || document.body.scrollLeft;
+        }
         dims.viewportBottom = dims.viewportTop + dims.viewportHeight;
-        dims.viewportLeft   = document.documentElement.scrollLeft || document.body.scrollLeft;
   
         dims.topSpacing    = this.options.topSpacing;
         dims.bottomSpacing = this.options.bottomSpacing;
