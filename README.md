@@ -6,6 +6,8 @@ Pure JavaScript plugin for making smart and high performance sticky sidebars, or
 This project was forked from the original [Sticky Sidebar](https://github.com/abouolia/sticky-sidebar), written by [Ahmed Bouhuolia](https://github.com/abouolia).
 As the original project is currently inactive, this fork is an attempt to revive the project and add some improvements.
 
+
+## Examples
 [Basic Example](https://blixhavn.github.io/sticky-sidebar/examples/basic.html)
 
 [Scrollable Sticky Element](https://blixhavn.github.io/sticky-sidebar/examples/scrollable-element.html)
