@@ -1,11 +1,11 @@
 {
   "name": "sticky-sidebar",
   "description": "A JavaScript plugin for making smart and high performance.",
-  "version": "3.3.1",
-  "author": "Ahmed Bouhuolia",
-  "email": "a.bouhuolia@gmail.com",
+  "version": "1.0.0",
+  "author": "Øystein Blixhavn",
+  "email": "oystein@blixhavn.no",
   "license": "The MIT License (MIT)",
-  "homepage": "https://github.com/abouolia/sticky-sidebar",
+  "homepage": "https://github.com/blixhavn/sticky-sidebar",
   "main": "./dist/sticky-sidebar.js",
   "module": "./src/sticky-sidebar.js",
   "keywords": [
@@ -21,7 +21,7 @@
     "src"
   ],
   "bugs": {
-    "url": "https://github.com/abouolia/sticky-sidebar/issues"
+    "url": "https://github.com/blixhavn/sticky-sidebar/issues"
   },
   "scripts": {
     "build": "gulp",
@@ -29,7 +29,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/abouolia/sticky-sidebar.git"
+    "url": "https://github.com/blixhavn/sticky-sidebar.git"
   },
   "devDependencies": {
     "babel": "^6.23.0",

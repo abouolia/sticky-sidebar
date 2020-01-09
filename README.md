@@ -1,12 +1,17 @@
-# Sticky Sidebar [![Build Status](https://travis-ci.org/abouolia/sticky-sidebar.svg?branch=3.2.0)](https://travis-ci.org/abouolia/sticky-sidebar)
+# Sticky Sidebar [![Build Status](https://travis-ci.org/blixhavn/sticky-sidebar.svg?branch=master)](https://travis-ci.org/blixhavn/sticky-sidebar)
 
-Pure JavaScript plugin for making smart and high performance sticky sidebars.
+Pure JavaScript plugin for making smart and high performance sticky sidebars, originally written by [Ahmed Bouhuolia](https://github.com/abouolia).
 
-[Basic Example](https://abouolia.github.io/sticky-sidebar/examples/basic.html)
+## Why the fork?
+This project was forked from the original [Sticky Sidebar](https://github.com/abouolia/sticky-sidebar), written by [Ahmed Bouhuolia](https://github.com/abouolia).
+As the original project is currently inactive, this fork is an attempt to revive the project and add some improvements.
 
-[Scrollable Sticky Element](https://abouolia.github.io/sticky-sidebar/examples/scrollable-element.html)
+[Basic Example](https://blixhavn.github.io/sticky-sidebar/examples/basic.html)
 
-For complete documentation and examples see [abouolia.github.com/sticky-sidebar](http://abouolia.github.com/sticky-sidebar)
+[Scrollable Sticky Element](https://blixhavn.github.io/sticky-sidebar/examples/scrollable-element.html)
+
+For complete documentation and examples see [blixhavn.github.com/sticky-sidebar](http://blixhavn.github.com/sticky-sidebar)
+
 
 ## Why is sticky sidebar so awesome?
 
@@ -99,7 +104,7 @@ You can choose not to include `ResizeSensor.js` and sticky sidebar will continue
 
 Sticky sidebar works in all modern browsers including Internet Explorer 9 and above, but if you want it to work with IE9, should include [`requestAnimationFrame`](https://gist.github.com/paulirish/1579671) polyfill before sticky sidebar code.
 
-If you have any issues with browser compatibility don’t hesitate to [Submit an issue](https://github.com/abouolia/sticky-sidebar/issues/new).
+If you have any issues with browser compatibility don’t hesitate to [Submit an issue](https://github.com/blixhavn/sticky-sidebar/issues/new).
 
 ## License
 
@@ -108,3 +113,6 @@ Sticky Sidebar is released under the MIT license. Have at it.
 -------
 
 Made by Ahmed Bouhuolia
+
+Maintainers:
+Øystein Blixhavn
