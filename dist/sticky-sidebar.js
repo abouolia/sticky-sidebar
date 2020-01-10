@@ -54,8 +54,8 @@ var stickySidebar = createCommonjsModule(function (module, exports) {
 
   /**
    * Sticky Sidebar JavaScript Plugin.
-   * @version 3.3.4
-   * @author Ahmed Bouhuolia <a.bouhuolia@gmail.com>
+   * @version 1.0.0
+   * @author Øystein Blixhavn <oystein@blixhavn.no>
    * @license The MIT License (MIT)
    */
   var StickySidebar = function () {
