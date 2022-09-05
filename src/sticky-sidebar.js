@@ -1,6 +1,6 @@
 /**
  * Sticky Sidebar JavaScript Plugin.
- * @version 3.3.1
+ * @version 3.3.4
  * @author Ahmed Bouhuolia <a.bouhuolia@gmail.com>
  * @license The MIT License (MIT)
  */
@@ -11,7 +11,7 @@ const StickySidebar = (() => {
     // ---------------------------------
     //
     const EVENT_KEY = '.stickySidebar';
-    const VERSION   = '3.3.3';
+    const VERSION   = '3.3.4';
   
     const DEFAULTS = {
       /**
@@ -282,7 +282,9 @@ const StickySidebar = (() => {
        * @return {Boolean}
        */
       isSidebarFitsViewport(){
-        return this.dimensions.sidebarHeight < this.dimensions.viewportHeight;
+        let dims = this.dimensions;
+        let offset = this.scrollDirection === 'down' ? dims.lastBottomSpacing : dims.lastTopSpacing;
+        return this.dimensions.sidebarHeight + offset < this.dimensions.viewportHeight;
       }
   
       /**
