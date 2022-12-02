@@ -6,7 +6,7 @@ Pure JavaScript plugin for making smart and high performance sticky sidebars.
 
 [Scrollable Sticky Element](https://abouolia.github.io/sticky-sidebar/examples/scrollable-element.html)
 
-For complete documentation and examples see [abouolia.github.com/sticky-sidebar](http://abouolia.github.com/sticky-sidebar)
+For complete documentation and examples see [abouolia.github.io/sticky-sidebar](https://abouolia.github.io/sticky-sidebar)
 
 ## Why is sticky sidebar so awesome?
 
