@@ -42,19 +42,25 @@ npm install sticky-sidebar
 Your website's html structure has to be similar to this in order to work:
 
 ````html
-<div class="main-content">
-    <div class="sidebar">
-        <div class="sidebar__inner">
-            <!-- Content goes here -->
-        </div>
-    </div>
-    <div class="content">
-        <!-- Content goes here -->
-    </div>
+<div class="scroll-container">
+  <div class="main-content">
+      <div class="sidebar">
+          <div class="sidebar__inner">
+              <!-- Content goes here -->
+          </div>
+      </div>
+      <div class="content">
+          <!-- Content goes here -->
+      </div>
+  </div>
 </div>
 ````
 
 Note that inner sidebar wrapper ``.sidebar__innner`` is optional but highly recommended, if you don't write it yourself, the script will create one for you under class name ``inner-wrapper-sticky``. but this may cause many problems.
+
+If your content is inside a container with scroll, this must be specified with the ``scrollContainerSelector`` option.
+
+If you need native CSS sticky, use the ``nativeSticky`` option.
 
 For the above example, you can use the following JavaScript:
 
@@ -65,8 +71,10 @@ For the above example, you can use the following JavaScript:
   var sidebar = new StickySidebar('.sidebar', {
     topSpacing: 20,
     bottomSpacing: 20,
+    scrollContainerSelector: '.scroll-container',
     containerSelector: '.main-content',
-    innerWrapperSelector: '.sidebar__inner'
+    innerWrapperSelector: '.sidebar__inner',
+    nativeSticky: true
   });
 </script>
 ````
