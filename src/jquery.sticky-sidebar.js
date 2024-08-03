@@ -9,7 +9,7 @@ import StickySidebar from './sticky-sidebar';
 	// Make sure the site has jquery or zepto plugin.
   if( plugin ){
     /**
-     * Sticky Sidebar Plugin Defintion.
+     * Sticky Sidebar Plugin Definition.
      * @param {Object|String} - config
      */
     function _jQueryPlugin(config){

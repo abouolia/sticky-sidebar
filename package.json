@@ -25,7 +25,8 @@
   },
   "scripts": {
     "build": "gulp",
-    "test": "mocha --compilers js:babel-core/register"
+    "test": "mocha --compilers js:babel-core/register",
+    "start": "http-server"
   },
   "repository": {
     "type": "git",
@@ -59,6 +60,10 @@
     "rollup-plugin-commonjs": "^8.2.1",
     "rollup-plugin-eslint": "^4.0.0",
     "rollup-plugin-node-resolve": "^3.0.0",
-    "sinon": "^4.4.3"
+    "sinon": "^4.4.3",
+    "http-server": "^0.12.3"
+  },
+  "dependencies": {
+    "sticky-sidebar": "^3.3.1"
   }
 }
